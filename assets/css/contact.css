@@ -1,0 +1,317 @@
+/* ============================
+   CONTACT PAGE LAYOUT
+   ============================ */
+
+/* Main Wrapper: Split Screen */
+.contact-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr; /* Info takes less space, Form takes more */
+    gap: 4rem;
+    align-items: center;
+    min-height: 80vh; /* Centers vertically */
+}
+
+/* --- LEFT SIDE: INFO --- */
+.contact-info h1 {
+    font-size: 3.5rem;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+}
+
+.text-gold {
+    background: var(--gold-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    color: var(--text);
+    font-size: 0.9rem;
+    margin-bottom: 3rem;
+    max-width: 90%;
+}
+
+.info-grid {
+    display: flex; 
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.icon-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-size: 1.2rem;
+    border: 1px solid #333;
+    transition: 0.3s;
+}
+
+.info-item:hover .icon-circle {
+    border-color: var(--gold);
+    box-shadow: 0 0 15px rgba(199, 163, 78, 0.2);
+}
+
+.info-item h4 { color: white; margin-bottom: 2px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+.info-item p { color: var(--text-gray); }
+
+
+/* --- RIGHT SIDE: PREMIUM FORM --- */
+.form-card {
+    background: var(--bg-card);
+    padding: 3rem;
+    border-radius: 40px;
+    border: 1px solid #222;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns for inputs */
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem; /* For single column items */
+}
+/* Reset margin for grid items handled by row gap */
+.form-row .input-group { margin-bottom: 0; } 
+
+label {
+    color: var(--text-gray);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+/* INPUT STYLES */
+input, select, textarea {
+    width: 100%;
+    background: #0a0a0a; /* Darker than card */
+    border: 1px solid #333;
+    padding: 15px 20px;
+    border-radius: 20px; /* Pill shape inputs */
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: 0.3s;
+}
+
+/* Gold Glow on Focus */
+input:focus, select:focus, textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 10px rgba(199, 163, 78, 0.1);
+    background: #111;
+}
+
+/* Custom Select Dropdown Arrow */
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='gray'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 20px;
+    cursor: pointer;
+}
+
+textarea {
+    resize: none;
+    border-radius: 20px; /* Rounded corners for textarea too */
+}
+
+
+/* SUBMIT BUTTON */
+.btn-submit {
+    width: 100%;
+    padding: 18px;
+    border-radius: 50px;
+    border: none;
+    background: var(--gold-gradient);
+    color: black;
+    font-size: 1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: 0.3s;
+    margin-top: 1rem;
+}
+
+.btn-submit:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(199, 163, 78, 0.3);
+}
+
+
+
+
+
+.flatpickr-calendar {
+    background: var(--bg-card) !important; /* Dark Card Background */
+    border: 1px solid #333 !important;
+    border-radius: 20px !important;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.5) !important;
+    color: white !important;
+    font-family: 'Segoe UI', sans-serif !important;
+    padding: 10px !important;
+}
+
+/* 2. The Header (Month/Year) */
+.flatpickr-months .flatpickr-month {
+    background: transparent !important;
+    color: white !important;
+    fill: white !important; /* Arrow colors */
+}
+
+.flatpickr-current-month .flatpickr-monthDropdown-months {
+    background: var(--bg-card) !important;
+}
+
+/* Arrow Hover Effect */
+.flatpickr-prev-month:hover svg, .flatpickr-next-month:hover svg {
+    fill: var(--gold) !important;
+}
+
+/* 3. Weekdays Row (Sun, Mon...) */
+span.flatpickr-weekday {
+    color: var(--text-gray) !important;
+    font-weight: 600 !important;
+}
+
+/* 4. The Days (Numbers) */
+.flatpickr-day {
+    color: white !important;
+    border-radius: 10px !important; /* Soft squares */
+    border: 1px solid transparent !important;
+    transition: 0.2s;
+}
+
+/* Hovering over a day */
+.flatpickr-day:hover {
+    background: #333 !important;
+    border-color: var(--gold) !important;
+}
+
+/* 5. SELECTED DATE (The Gold Pill) */
+.flatpickr-day.selected, 
+.flatpickr-day.startRange, 
+.flatpickr-day.endRange, 
+.flatpickr-day.selected.inRange, 
+.flatpickr-day.startRange.inRange, 
+.flatpickr-day.endRange.inRange, 
+.flatpickr-day.selected:focus, 
+.flatpickr-day.startRange:focus, 
+.flatpickr-day.endRange:focus {
+    background: var(--gold-gradient) !important;
+    border-color: transparent !important;
+    color: black !important; /* Black text on Gold looks premium */
+    font-weight: bold !important;
+    box-shadow: 0 0 15px rgba(199, 163, 78, 0.4);
+}
+
+/* 6. Today's Date (Small Indicator) */
+.flatpickr-day.today {
+    border-color: var(--text-gray) !important;
+}
+.flatpickr-day.today:hover {
+    border-color: var(--gold) !important;
+    background: transparent !important;
+    color: white !important;
+}
+
+
+
+input[type="date"] {
+    color-scheme: dark; /* This makes the popup calendar dark automatically */
+    position: relative;
+    color: white; /* Text color */
+}
+
+/* 2. Style the Calendar Icon (The little calendar symbol) */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background-color: transparent;
+    cursor: pointer;
+    
+    /* This filter trick turns the black default icon into GOLD */
+    filter: invert(68%) sepia(34%) saturate(760%) hue-rotate(2deg) brightness(96%) contrast(89%);
+    
+    position: absolute;
+    right: 15px; /* Align strictly to right */
+    width: 20px;
+    height: 20px;
+}
+
+/* 3. Placeholder Logic (Make "dd/mm/yyyy" grey until selected) */
+input[type="date"]::-webkit-datetime-edit-text,
+input[type="date"]::-webkit-datetime-edit-month-field,
+input[type="date"]::-webkit-datetime-edit-day-field,
+input[type="date"]::-webkit-datetime-edit-year-field {
+    color: var(--text-gray);
+}
+
+/* When the user actually selects a date, make it white */
+input[type="date"]:focus::-webkit-datetime-edit-text,
+input[type="date"]:focus::-webkit-datetime-edit-month-field,
+input[type="date"]:focus::-webkit-datetime-edit-day-field,
+input[type="date"]:focus::-webkit-datetime-edit-year-field,
+input[type="date"].has-value::-webkit-datetime-edit-text,
+input[type="date"].has-value::-webkit-datetime-edit-month-field,
+input[type="date"].has-value::-webkit-datetime-edit-day-field,
+input[type="date"].has-value::-webkit-datetime-edit-year-field {
+    color: white;
+} 
+/* ============================
+   RESPONSIVE DESIGN
+   ============================ */
+@media (max-width: 1024px) {
+    .contact-wrapper {
+        grid-template-columns: 1fr; /* Stack vertically */
+        gap: 3rem;
+    }
+
+    .contact-info { text-align: center; }
+    .contact-info h1 { font-size: 2.5rem; }
+    .subtitle { margin: 0 auto 2rem auto; }
+    
+    .info-grid {
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    .info-item { 
+        background: #111; 
+        padding: 10px 20px; 
+        border-radius: 30px; 
+    }
+    
+    .form-card { padding: 2rem; border-radius: 30px; }
+    .form-row { grid-template-columns: 1fr; gap: 0; } /* Inputs stack on mobile */
+    .form-row .input-group { margin-bottom: 1.5rem; }
+    
+    /* Ensure button is visible above bottom nav */
+    .btn-submit { margin-bottom: 0; }
+    
+    /* Extra padding at bottom so Mobile Nav doesn't cover form */
+    .main-content { padding-bottom: 150px; }
+}

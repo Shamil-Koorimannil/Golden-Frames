@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inquiry - Golden Frames</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<link rel="stylesheet" href="assets/css/contact.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/contact.css">
+</head>
+<body>
+
+    <div id="nav-placeholder"></div>
+
+    <main class="main-content">
+        
+        <div class="contact-wrapper">
+            
+            <div class="contact-info">
+                <h1>Let's Plan Your <br><span class="text-gold">Masterpiece</span></h1>
+                <p class="subtitle">From intimate gatherings to grand galas, tell us your vision. We handle the details; you enjoy the moment.</p>
+                
+                
+            </div>
+
+            <div class="form-card">
+                <form id="inquiryForm">
+                     
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>Full Name</label>
+                            <input type="text" placeholder="" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Phone Number</label>
+                            <input type="tel" placeholder="+91 ..." required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>Email Address</label>
+                            <input type="email" placeholder="" required>
+                        </div>
+                        <div class="input-group">
+    <label>Event Date</label>
+    <input type="text" class="datepicker" placeholder="Select a date" required>
+</div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="input-group">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Message</label>
+                        <textarea rows="4" placeholder="Tell us about your theme, guest count, or specific requirements..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        <span>Send Inquiry</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+
+                </form>
+            </div>
+
+
+            <div class="info-grid">
+                    <div class="info-item">
+                        <div class="icon-circle"><i class="fas fa-phone-alt"></i></div>
+                        <div>
+                            <h4>Call Us</h4>
+                            <p>+91 98765 43210</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="icon-circle"><i class="fas fa-envelope"></i></div>
+                        <div>
+                            <h4>Email</h4>
+                            <p>hello@goldenframes.com</p>
+                        </div>
+                    </div>
+                </div> 
+        </div>
+
+    </main>
+
+    <script src="assets/js/global.js"></script>
+    
+    <script>
+        document.getElementById('inquiryForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.querySelector('.btn-submit');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '<span>Message Sent!</span> <i class="fas fa-check"></i>';
+            btn.style.background = 'white'; // Success state
+            
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.background = ''; // Reset
+                this.reset();
+            }, 3000);
+        });
+        // Add this inside your <script> tag in contact.html
+const dateInput = document.querySelector('input[type="date"]');
+dateInput.addEventListener('change', function() {
+    if (this.value) {
+        this.classList.add('has-value');
+    } else {
+        this.classList.remove('has-value');
+    }
+}); 
+// Initialize Flatpickr
+flatpickr(".datepicker", {
+    dateFormat: "F j, Y", // Formats like: "October 25, 2025"
+    minDate: "today",     // Cannot select past dates
+    disableMobile: "true" // Forces the custom theme even on mobile (remove this line if you prefer native phone pickers)
+});
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="assets/js/router.js"></script>
+</body>
+</html>

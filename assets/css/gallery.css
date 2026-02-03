@@ -1,0 +1,137 @@
+/* ============================
+   PORTFOLIO PAGE STYLES
+   ============================ */
+
+/* --- HEADER --- */
+.gallery-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-top: 1rem;
+}
+
+.gallery-header h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    font-weight: 800;
+}
+
+.text-gold {
+    background: var(--gold-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.gallery-header p {
+    color: var(--text-gray);
+    font-size: 1.1rem;
+}
+
+/* ============================
+   MASONRY GALLERY (Pinterest Style)
+   ============================ */
+.masonry-wrapper {
+    /* 1. Define Columns */
+    column-count: 3;
+    column-gap: 15px; /* Tighter gap for cleaner look */
+    width: 100%;
+}
+
+.gallery-item {
+    /* 2. PREVENT GAPS & BREAKING */
+    break-inside: avoid; /* Stops chopping images */
+    display: inline-block; /* Fixes alignment issues */
+    width: 100%;
+    margin-bottom: 15px; /* Space between bottom of one and top of next */
+    
+    position: relative;
+    border-radius: 20px; /* Slightly smaller radius looks neater in grid */
+    overflow: hidden;
+    
+    /* Matches your cutout theme */
+    border: 5px solid var(--bg-body); 
+    background: var(--bg-card);
+    
+    /* Hardware acceleration for smooth hover */
+    transform: translateZ(0); 
+}
+
+.gallery-item img {
+    width: 100%;
+    height: auto;
+    display: block; /* Removes tiny 3px gap at bottom of image */
+    transition: transform 0.5s ease;
+}
+
+/* ============================
+   HOVER EFFECTS
+   ============================ */
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 15px;
+    
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-item:hover .overlay {
+    opacity: 1;
+}
+
+.overlay h3 {
+    color: white;
+    font-size: 1rem;
+    margin-bottom: 3px;
+    transform: translateY(10px);
+    transition: transform 0.3s ease;
+}
+
+.overlay p {
+    color: var(--gold);
+    font-size: 0.8rem;
+    font-weight: 600;
+    transform: translateY(10px);
+    transition: transform 0.3s ease 0.1s;
+}
+
+.gallery-item:hover .overlay h3,
+.gallery-item:hover .overlay p {
+    transform: translateY(0);
+}
+
+
+/* ============================
+   RESPONSIVE (Mobile 2 Columns)
+   ============================ */
+@media (max-width: 1024px) {
+    .masonry-wrapper {
+        column-count: 2; 
+    }
+}
+
+@media (max-width: 600px) {
+    .masonry-wrapper {
+        /* FORCE 2 COLUMNS ON MOBILE */
+        column-count: 2;
+        column-gap: 10px; /* Smaller gap for mobile */
+    }
+    
+    .gallery-header h1 { font-size: 2rem; }
+    
+    /* Adjust text size for small columns */
+    .overlay h3 { font-size: 0.85rem; }
+    .overlay p { font-size: 0.7rem; }
+    
+    /* Optional: Make border thinner on mobile to save space */
+    .gallery-item { border-width: 3px; border-radius: 15px; margin-bottom: 10px; }
+}
