@@ -3,22 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Golden Frames - Event Management</title>
+    <title>Golden Frames - Luxury Event Management</title>
     
+    <script>
+        if (sessionStorage.getItem('splashSeen') === 'true') {
+            document.documentElement.classList.add('skip-splash');
+        }
+    </script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     
     <link rel="stylesheet" href="assets/css/global.css">
     <link rel="stylesheet" href="assets/css/home.css">
+
+    <style>
+        /* --- SPLASH SCREEN WRAPPER --- */
+        #splash-screen {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            z-index: 999999;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* --- NEW: CINEMATIC VIDEO BACKGROUND --- */
+        .landing-video {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover; /* Ensures the video scales perfectly to fill the screen */
+            z-index: 1;
+            /* A subtle brightness drop before the overlay hits it */
+            filter: brightness(0.8); 
+        }
+
+        .splash-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.85) 100%);
+            z-index: 2;
+        }
+
+        .landing-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .brand-subtitle {
+            color: #ccc;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeUp 1s ease 0.5s forwards;
+        }
+
+        .brand-title {
+            font-size: 5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0px 10px 20px rgba(0,0,0,0.8));
+            opacity: 0;
+            animation: fadeUp 1s ease 0.8s forwards;
+        }
+
+        .enter-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 40px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            
+            transition: all 0.4s ease;
+            opacity: 0;
+            animation: fadeUp 1s ease 1.2s forwards;
+        }
+
+        .enter-btn i { transition: transform 0.4s ease; }
+
+        .enter-btn:hover {
+            background: var(--gold-gradient);
+            color: black;
+            box-shadow: 0 0 30px rgba(199, 163, 78, 0.5);
+        }
+        .enter-btn:hover i { transform: translateX(5px); }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .brand-title { font-size: 3rem; }
+            .brand-subtitle { font-size: 0.75rem; letter-spacing: 3px; }
+            .enter-btn { padding: 14px 30px; font-size: 0.8rem; }
+        }
+        
+        /* Initial state for home elements before GSAP reveals them */
+        .home-grid, .promo-banner, .sidebar, .cta-pill-container, .mobile-nav {
+            visibility: hidden;
+        }
+
+        /* LOGIC TO HIDE SPLASH IF ALREADY SEEN */
+        html.skip-splash #splash-screen {
+            display: none !important;
+        }
+        html.skip-splash .home-grid, 
+        html.skip-splash .promo-banner, 
+        html.skip-splash .sidebar, 
+        html.skip-splash .cta-pill-container, 
+        html.skip-splash .mobile-nav {
+            visibility: visible !important;
+        }
+    </style>
 </head>
 <body>
+
+    <div id="splash-screen">
+        <video class="landing-video" autoplay muted loop playsinline>
+    <source src="assets/images/system/gol3.mp4" type="video/mp4">
+</video>
+        
+        <div class="splash-overlay"></div>
+        <div class="landing-content">
+            <p class="brand-subtitle">Est. 2014</p>
+            <h1 class="brand-title">GOLDEN<br>FRAMES</h1>
+            <button id="enter-site-btn" class="enter-btn">
+                Discover the Magic <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <nav class="sidebar">
+        <div class="nav-section">
+            <ul class="nav-links">
+                <li><a href="index.html" class="active" title="Home"><i class="fas fa-home"></i> <span>Home</span></a></li>
+                <li><a href="about.html" title="About Us"><i class="fas fa-info-circle"></i> <span>About</span></a></li>
+                <li><a href="wedding-planner.html" title="Weddings"><i class="fas fa-ring"></i> <span>Weddings</span></a></li>
+                <li><a href="gallery.html" title="Gallery"><i class="fas fa-images"></i> <span>Gallery</span></a></li>
+            </ul>
+        </div>
+        <div class="logo-area">
+            <div class="logo-circle"><img src="assets/images/logo.jpg" alt="GF"></div>
+            <div class="brand-name">GOLDEN</div>
+        </div>
+    </nav>
+
+    <div class="cta-pill-container">
+        <a href="https://wa.me/YOURNUMBER" target="_blank" class="cta-icon-btn btn-wa" title="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a href="contact.html" class="cta-icon-btn btn-call" title="Call Us"><i class="fas fa-phone"></i></a>
+    </div>
+
+    <nav class="mobile-nav">
+        <a href="index.html" class="mobile-item active"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="wedding-planner.html" class="mobile-item"><i class="fas fa-ring"></i><span>Weddings</span></a>
+        <a href="contact.html" class="mobile-item mobile-center-btn"><i class="fas fa-paper-plane"></i></a>
+        <a href="gallery.html" class="mobile-item"><i class="fas fa-images"></i><span>Gallery</span></a>
+        <a href="about.html" class="mobile-item"><i class="fas fa-user"></i><span>About</span></a>
+    </nav>
 
     <div id="nav-placeholder"></div>
 
     <main class="main-content">
-        
         <div class="home-grid">
             <div class="hero-card">
-                
                 <div class="hero-bg" style="background-image: url('assets/images/home/hero-stage.jpg');"></div>
                 
                 <div class="hero-content">
@@ -37,20 +209,19 @@
                             </a>
                         </li>
                         <li>
-                            <a href="venue.html">
+                            <a href="theme-wedding-planner.html">
                                 <div class="icon-box"><i class="fas fa-map-marker-alt"></i></div>
-                                <span>Venue Selection</span> 
+                                <span>Theme Weddings</span> 
                             </a>
                         </li>
                         <li>
-                            <a href="rentals.html">
-                                <div class="icon-box"><i class="fas fa-chair"></i></div>
-                                <span>Event Rentals</span> 
+                            <a href="gallery.html">
+                                <div class="icon-box"><i class="fas fa-images"></i></div>
+                                <span>Our Gallery</span> 
                             </a>
                         </li>
                     </ul>
                 </div>
-                
             </div>
         </div>
 
@@ -60,15 +231,63 @@
                     <h2>Golden Package Offer</h2>
                     <p>Get 20% off on full wedding planning bookings this month.</p>
                 </div>
-                <div class="promo-icon">
-                    <i class="fas fa-gift"></i>
-                </div>
+                <div class="promo-icon"><i class="fas fa-gift"></i></div>
             </div>
         </div>
-
     </main>
 
     <script src="assets/js/global.js"></script>
-<script src="assets/js/router.js"></script>
+    <script src="assets/js/router.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // SKIP LOGIC
+            if (sessionStorage.getItem('splashSeen') === 'true') {
+                document.body.style.overflow = ''; 
+                return; 
+            }
+
+            // Lock scrolling immediately for first-time visitors
+            document.body.style.overflow = 'hidden';
+
+            const enterBtn = document.getElementById('enter-site-btn');
+            
+            if (enterBtn) {
+                enterBtn.addEventListener('click', () => {
+                    
+                    // SAVE TO MEMORY
+                    sessionStorage.setItem('splashSeen', 'true');
+                    
+                    const tl = gsap.timeline({
+                        onComplete: () => {
+                            document.getElementById('splash-screen').style.display = 'none';
+                            document.body.style.overflow = ''; 
+                        }
+                    });
+
+                    tl.to(".landing-content", {
+                        scale: 1.15, opacity: 0, duration: 0.8, ease: "power2.inOut"
+                    })
+                    .to("#splash-screen", {
+                        opacity: 0, duration: 1.2, ease: "power2.inOut"
+                    }, "-=0.4")
+                    .set(".home-grid, .promo-banner, .sidebar, .cta-pill-container, .mobile-nav", { visibility: "visible" }, "-=1.2")
+                    .from(".home-grid", {
+                        scale: 1.04, opacity: 0, duration: 1.8, ease: "power3.out"
+                    }, "-=1.2")
+                    .from(".hero-content > *", {
+                        y: 20, opacity: 0, duration: 1.2, stagger: 0.1, ease: "power3.out"
+                    }, "-=1.2")
+                    .from(".sidebar, .cta-pill-container, .mobile-nav", {
+                        opacity: 0, duration: 1.5, ease: "power2.out"
+                    }, "-=1.0")
+                    .from(".widget-card, .promo-banner", {
+                        y: 15, opacity: 0, duration: 1.2, stagger: 0.15, ease: "power3.out"
+                    }, "-=1.0");
+                });
+            }
+        });
+    </script>
 </body>
 </html>

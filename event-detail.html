@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details - Golden Frames</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/gallery.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+
+    <nav class="sidebar">
+        <div class="nav-section">
+            <ul class="nav-links">
+                <li>
+                    <a href="index.html" title="Home">
+                        <i class="fas fa-home"></i> 
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="about.html" title="About Us">
+                        <i class="fas fa-info-circle"></i> 
+                        <span>About</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="wedding-planner.html" title="Weddings">
+                        <i class="fas fa-ring"></i> 
+                        <span>Weddings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="gallery.html" class="active" title="Gallery">
+                        <i class="fas fa-images"></i> 
+                        <span>Gallery</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="logo-area">
+            <div class="logo-circle">
+                <img src="assets/images/logo.jpg" alt="GF">
+            </div>
+            <div class="brand-name">GOLDEN</div>
+        </div>
+    </nav>
+
+    <div class="cta-pill-container">
+        <a href="https://wa.me/YOURNUMBER" target="_blank" class="cta-icon-btn btn-wa" title="Chat on WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="contact.html" class="cta-icon-btn btn-call" title="Call Us">
+            <i class="fas fa-phone"></i>
+        </a>
+    </div>
+
+    <nav class="mobile-nav">
+        <a href="index.html" class="mobile-item"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="wedding-planner.html" class="mobile-item"><i class="fas fa-ring"></i><span>Weddings</span></a>
+        
+        <a href="contact.html" class="mobile-item mobile-center-btn">
+            <i class="fas fa-paper-plane"></i>
+        </a>
+        
+        <a href="gallery.html" class="mobile-item active"><i class="fas fa-images"></i><span>Gallery</span></a>
+        <a href="about.html" class="mobile-item"><i class="fas fa-user"></i><span>About</span></a>
+    </nav>
+
+
+    <main class="main-content">
+        
+        <div class="gallery-header event-detail-header">
+            <a href="gallery.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Gallery</a>
+            <h1 id="event-title">Loading...</h1>
+            <p id="event-category" class="text-gold"></p>
+        </div>
+
+        <div class="carousel-outer">
+            <button id="prev-btn" class="nav-btn"><i class="fas fa-chevron-left"></i></button>
+            <button id="next-btn" class="nav-btn"><i class="fas fa-chevron-right"></i></button>
+            
+            <div class="carousel-wrapper" id="carousel-container">
+                </div>
+        </div>
+            </div>
+
+        <div id="image-modal" class="modal-overlay">
+            <span class="modal-close"><i class="fas fa-times"></i></span>
+            <img id="modal-img" src="" alt="Fullscreen Event Image">
+        </div>
+
+    </main>
+
+    <script src="assets/js/global.js"></script>
+    <script type="module" src="assets/js/event-detail.js"></script>
+    <script src="assets/js/router.js"></script>
+
+</body>
+</html>
