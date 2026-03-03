@@ -1,0 +1,140 @@
+/* ============================
+   REVIEWS PAGE STYLES
+   ============================ */
+
+.reviews-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-top: 1rem;
+}
+
+.reviews-header h1 {
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 800;
+}
+
+.text-gold {
+    background: var(--gold-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.reviews-header p {
+    color: var(--text-gray);
+    font-size: 1.1rem;
+}
+
+/* --- THE LAYOUT GRID --- */
+.reviews-layout {
+    display: grid;
+    grid-template-columns: 350px 1fr; /* Form card is fixed width, widget takes the rest */
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: start;
+}
+
+/* --- THE CALL TO ACTION CARD (Glassmorphism) --- */
+.review-cta-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    padding: 3rem 2rem;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    
+    position: sticky;
+    top: 100px; /* Sticks to the screen as you scroll past reviews */
+}
+
+.google-icon {
+    width: 60px;
+    height: 60px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem auto;
+    font-size: 2rem;
+    color: #4285F4; /* Google Blue */
+    box-shadow: 0 0 20px rgba(255,255,255,0.2);
+}
+
+.review-cta-card h3 {
+    color: white;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.review-cta-card p {
+    color: var(--text-gray);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.stars-display {
+    color: var(--gold);
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    text-shadow: 0 0 15px rgba(199, 163, 78, 0.5);
+}
+
+.btn-gold {
+    display: inline-flex; 
+    align-items: center;
+    justify-content: center;
+    background: var(--gold-gradient);
+    color: black;
+    padding: 15px 30px; 
+    border-radius: 50px; 
+    font-weight: bold;
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+    font-size: 0.9rem; 
+    transition: 0.3s;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    width: 100%;
+}
+
+.btn-gold:hover {
+    background: white;
+    box-shadow: 0 0 25px rgba(199, 163, 78, 0.6);
+    transform: translateY(-3px);
+}
+
+/* --- THE ELFSIGHT CONTAINER --- */
+.elfsight-container {
+    width: 100%;
+    min-height: 500px; /* Prevents layout jump while widget loads */
+    border-radius: 20px;
+    overflow: hidden; /* Keeps widget corners clean */
+}
+
+/* --- MOBILE RESPONSIVE --- */
+@media (max-width: 1024px) {
+    .reviews-layout {
+        grid-template-columns: 1fr; /* Stack vertically on mobile */
+        gap: 2rem;
+    }
+    
+    .review-cta-card {
+        position: relative;
+        top: 0;
+        padding: 2rem 1.5rem;
+    }
+    
+    .reviews-header h1 {
+        font-size: 2.5rem;
+    }
+}

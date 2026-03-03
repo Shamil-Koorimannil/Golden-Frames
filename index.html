@@ -31,14 +31,12 @@
             overflow: hidden;
         }
 
-        /* --- NEW: CINEMATIC VIDEO BACKGROUND --- */
         .landing-video {
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            object-fit: cover; /* Ensures the video scales perfectly to fill the screen */
+            object-fit: cover; 
             z-index: 1;
-            /* A subtle brightness drop before the overlay hits it */
             filter: brightness(0.8); 
         }
 
@@ -123,21 +121,79 @@
             .enter-btn { padding: 14px 30px; font-size: 0.8rem; }
         }
         
-        /* Initial state for home elements before GSAP reveals them */
-        .home-grid, .promo-banner, .sidebar, .cta-pill-container, .mobile-nav {
+        .home-grid, .promo-banner, .sidebar, .cta-pill-container, .mobile-nav, .faq-section {
             visibility: hidden;
         }
 
-        /* LOGIC TO HIDE SPLASH IF ALREADY SEEN */
-        html.skip-splash #splash-screen {
-            display: none !important;
-        }
+        html.skip-splash #splash-screen { display: none !important; }
         html.skip-splash .home-grid, 
         html.skip-splash .promo-banner, 
         html.skip-splash .sidebar, 
         html.skip-splash .cta-pill-container, 
-        html.skip-splash .mobile-nav {
+        html.skip-splash .mobile-nav,
+        html.skip-splash .faq-section {
             visibility: visible !important;
+        }
+
+        /* ============================
+           NEW: FAQ SECTION STYLES
+           ============================ */
+        .faq-section {
+            padding: 5rem 0 2rem 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .faq-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .faq-header h2 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 1rem;
+        }
+        .faq-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .faq-question {
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        .faq-question i {
+            color: var(--gold);
+            transition: transform 0.3s ease;
+        }
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            color: var(--text-gray);
+            line-height: 1.6;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+        
+        /* Active State for Accordion */
+        .faq-item.active {
+            background: rgba(199, 163, 78, 0.05);
+            border-color: var(--gold);
+        }
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        .faq-item.active .faq-answer {
+            padding-bottom: 1.5rem;
+            max-height: 300px; 
         }
     </style>
 </head>
@@ -145,8 +201,8 @@
 
     <div id="splash-screen">
         <video class="landing-video" autoplay muted loop playsinline>
-    <source src="assets/images/system/gol3.mp4" type="video/mp4">
-</video>
+            <source src="assets/images/system/gol3.mp4" type="video/mp4">
+        </video>
         
         <div class="splash-overlay"></div>
         <div class="landing-content">
@@ -158,34 +214,6 @@
         </div>
     </div>
 
-    <nav class="sidebar">
-        <div class="nav-section">
-            <ul class="nav-links">
-                <li><a href="index.html" class="active" title="Home"><i class="fas fa-home"></i> <span>Home</span></a></li>
-                <li><a href="about.html" title="About Us"><i class="fas fa-info-circle"></i> <span>About</span></a></li>
-                <li><a href="wedding-planner.html" title="Weddings"><i class="fas fa-ring"></i> <span>Weddings</span></a></li>
-                <li><a href="gallery.html" title="Gallery"><i class="fas fa-images"></i> <span>Gallery</span></a></li>
-            </ul>
-        </div>
-        <div class="logo-area">
-            <div class="logo-circle"><img src="assets/images/logo.jpg" alt="GF"></div>
-            <div class="brand-name">GOLDEN</div>
-        </div>
-    </nav>
-
-    <div class="cta-pill-container">
-        <a href="https://wa.me/YOURNUMBER" target="_blank" class="cta-icon-btn btn-wa" title="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a>
-        <a href="contact.html" class="cta-icon-btn btn-call" title="Call Us"><i class="fas fa-phone"></i></a>
-    </div>
-
-    <nav class="mobile-nav">
-        <a href="index.html" class="mobile-item active"><i class="fas fa-home"></i><span>Home</span></a>
-        <a href="wedding-planner.html" class="mobile-item"><i class="fas fa-ring"></i><span>Weddings</span></a>
-        <a href="contact.html" class="mobile-item mobile-center-btn"><i class="fas fa-paper-plane"></i></a>
-        <a href="gallery.html" class="mobile-item"><i class="fas fa-images"></i><span>Gallery</span></a>
-        <a href="about.html" class="mobile-item"><i class="fas fa-user"></i><span>About</span></a>
-    </nav>
-
     <div id="nav-placeholder"></div>
 
     <main class="main-content">
@@ -195,7 +223,7 @@
                 
                 <div class="hero-content">
                     <h1>Creating <span class="text-gold">Timeless</span><br>Memories</h1>
-                    <p>Since 2014. Turning your vision into a golden reality.</p>
+                    <p>Since 2014. Turning your Moments into a golden Memory.</p>
                     <a href="contact.html" class="btn-gold">Book Consultation</a>
                 </div>
 
@@ -203,15 +231,15 @@
                     <h3>Explore Services</h3> 
                     <ul class="quick-list">
                         <li>
-                            <a href="wedding-planner.html">
-                                <div class="icon-box"><i class="fas fa-ring"></i></div>
-                                <span>Luxury Weddings</span> 
+                            <a href="reviews.html">
+                                <div class="icon-box"><i class="fas fa-star"></i></div>
+                                <span>Reviews</span> 
                             </a>
                         </li>
                         <li>
-                            <a href="theme-wedding-planner.html">
-                                <div class="icon-box"><i class="fas fa-map-marker-alt"></i></div>
-                                <span>Theme Weddings</span> 
+                            <a href="about.html">
+                                <div class="icon-box"><i class="fas fa-info-circle"></i></div>
+                                <span>About us</span> 
                             </a>
                         </li>
                         <li>
@@ -225,7 +253,7 @@
             </div>
         </div>
 
-        <div class="promo-banner">
+        <!-- <div class="promo-banner">
             <div class="promo-content">
                 <div class="promo-text">
                     <h2>Golden Package Offer</h2>
@@ -233,7 +261,57 @@
                 </div>
                 <div class="promo-icon"><i class="fas fa-gift"></i></div>
             </div>
-        </div>
+        </div> -->
+
+        <section class="faq-section">
+            <div class="faq-header">
+                <h2>Frequently Asked <span class="text-gold">Questions</span></h2>
+                <p style="color: var(--text-gray);">Everything you need to know about our premium services.</p>
+            </div>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Do you handle the entire wedding preparation?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Yes, playing the role of comprehensive event planners, we take over the complete responsibility of the wedding preparations. All requirements are fulfilled under one roof so the occasion feels complete and stress-free for you.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Will you work within our specific budget?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Absolutely. We make ourselves unique by working in favor of the needs of our clients above all else. We see to it that your budget does not put down the expectations. This is our trade secret to keeping our customers happy.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>When should we hire you for our wedding?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Unlike other wedding event management companies, we take over our responsibilities well ahead of time. Contact us early so we can meet with you, make a detailed note of your requirements, and ensure perfect execution.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Do you manage Destination Weddings?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Yes! We specialize in Premium Event Management and Destination Weddings across Kerala. Experience your dream wedding in God's Own Country with our expert planners handling every detail.
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <script src="assets/js/global.js"></script>
@@ -242,21 +320,33 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             
-            // SKIP LOGIC
+            // --- FAQ ACCORDION LOGIC ---
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', () => {
+                    // Close other open items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item && otherItem.classList.contains('active')) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    // Toggle the clicked item
+                    item.classList.toggle('active');
+                });
+            });
+
+            // --- SPLASH SCREEN LOGIC ---
             if (sessionStorage.getItem('splashSeen') === 'true') {
                 document.body.style.overflow = ''; 
                 return; 
             }
 
-            // Lock scrolling immediately for first-time visitors
             document.body.style.overflow = 'hidden';
-
             const enterBtn = document.getElementById('enter-site-btn');
             
             if (enterBtn) {
                 enterBtn.addEventListener('click', () => {
-                    
-                    // SAVE TO MEMORY
                     sessionStorage.setItem('splashSeen', 'true');
                     
                     const tl = gsap.timeline({
@@ -272,7 +362,7 @@
                     .to("#splash-screen", {
                         opacity: 0, duration: 1.2, ease: "power2.inOut"
                     }, "-=0.4")
-                    .set(".home-grid, .promo-banner, .sidebar, .cta-pill-container, .mobile-nav", { visibility: "visible" }, "-=1.2")
+                    .set(".home-grid, .promo-banner, .sidebar, .cta-pill-container, .mobile-nav, .faq-section", { visibility: "visible" }, "-=1.2")
                     .from(".home-grid", {
                         scale: 1.04, opacity: 0, duration: 1.8, ease: "power3.out"
                     }, "-=1.2")
@@ -282,7 +372,7 @@
                     .from(".sidebar, .cta-pill-container, .mobile-nav", {
                         opacity: 0, duration: 1.5, ease: "power2.out"
                     }, "-=1.0")
-                    .from(".widget-card, .promo-banner", {
+                    .from(".widget-card, .promo-banner, .faq-section", {
                         y: 15, opacity: 0, duration: 1.2, stagger: 0.15, ease: "power3.out"
                     }, "-=1.0");
                 });
