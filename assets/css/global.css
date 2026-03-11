@@ -34,14 +34,12 @@
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
 
 body { 
-    background-image: url('../images/system/bg-2.jpg'); 
     
     /* FIX: Make background constant during scroll */
     background-attachment: fixed;
     background-size: cover; /* Ensures it stretches to fit the screen */
     background-position: center; /* Keeps it centered */
     background-repeat: no-repeat; /* Prevents tiling */
-    
     color: var(--text-white); 
     display: flex; 
     min-height: 100vh; 
@@ -305,4 +303,75 @@ ul { list-style: none; }
         padding-left: 0 !important;
         text-align: center !important;
     }
+}
+
+
+
+
+
+/* ============================
+   LUXURY CUSTOM CURSOR (GLOBAL)
+   ============================ */
+@media (min-width: 1025px) {
+    /* Hides the default pointer on desktop */
+    body, a, button, .faq-question, .scroll-indicator, .magnetic-btn { cursor: none !important; }
+}
+.cursor-dot, .cursor-ring {
+    position: fixed; top: 0; left: 0; pointer-events: none; z-index: 999999;
+    border-radius: 50%; transform: translate(-50%, -50%); display: none;
+}
+@media (min-width: 1025px) {
+    .cursor-dot, .cursor-ring { display: block; }
+}
+.cursor-dot { width: 8px; height: 8px; background-color: var(--gold); }
+.cursor-ring { 
+    width: 40px; height: 40px; border: 1px solid var(--gold); 
+    transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
+}
+.cursor-ring.hovered { 
+    width: 65px; height: 65px; 
+    background-color: rgba(199, 163, 78, 0.15); border-color: transparent; 
+}
+
+
+
+
+
+
+
+
+
+
+/* ============================
+   GLOBAL INTERACTIVE BACKGROUND
+   ============================ */
+#global-interactive-bg {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background-image: radial-gradient(circle at 50% 50%, #1a160b 0%, #000 100%);
+    z-index: -999; /* Keeps it permanently behind everything */
+    overflow: hidden;
+    pointer-events: none; /* Prevents it from blocking clicks */
+}
+
+.ambient-glow {
+    position: absolute; width: 80vw; height: 80vw;
+    background: radial-gradient(circle, rgba(199, 163, 78, 0.08) 0%, transparent 60%);
+    border-radius: 50%; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.bokeh {
+    position: absolute; border-radius: 50%;
+    background: var(--gold-gradient); filter: blur(50px); opacity: 0.3;
+}
+.bokeh-1 { width: 400px; height: 400px; top: -10%; left: 10%; animation: float 18s infinite ease-in-out; }
+.bokeh-2 { width: 300px; height: 300px; bottom: -5%; right: 15%; animation: float 22s infinite reverse ease-in-out; opacity: 0.2; }
+.bokeh-3 { width: 200px; height: 200px; top: 40%; right: 30%; animation: float 15s infinite alternate ease-in-out; opacity: 0.15; }
+
+@keyframes float {
+    0% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-40px) scale(1.05); }
+    100% { transform: translateY(0) scale(1); }
 }

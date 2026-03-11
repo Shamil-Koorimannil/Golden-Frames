@@ -1,155 +1,37 @@
 /* ============================
-   SPLASH SCREEN (Landing Overlay)
+   1. THE CURTAIN & HOME GRID
    ============================ */
-#splash-screen {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    z-index: 999999; /* Forces it above your sidebar and mobile nav */
-    background-color: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+#home-sliding-content {
+    position: relative; 
+    z-index: 10; 
     
-    /* Smooth fade-out transition triggered by JS */
-    transition: opacity 1s ease, visibility 1s ease;
-}
-
-/* When the JS adds this class, the screen fades away */
-#splash-screen.fade-out {
-    opacity: 0;
-    visibility: hidden;
-}
-
-/* --- THE CINEMATIC BACKGROUND --- */
-.landing-bg {
-    position: absolute;
-    inset: 0;
-    background-image: url('../images/home/hero-stage.jpg'); /* Use your best image */
-    background-size: cover;
-    background-position: center;
-    animation: slowZoom 20s infinite alternate ease-in-out;
-    z-index: 1;
-}
-
-@keyframes slowZoom {
-    0% { transform: scale(1); }
-    100% { transform: scale(1.15); }
-}
-
-/* --- DARK OVERLAY --- */
-.splash-overlay {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.85) 100%);
-    z-index: 2;
-}
-
-/* --- MAIN CONTENT CONTAINER --- */
-.landing-content {
-    position: relative;
-    z-index: 3;
-    text-align: center;
-    padding: 0 20px;
-}
-
-/* --- TYPOGRAPHY --- */
-.brand-subtitle {
-    color: #ccc;
-    text-transform: uppercase;
-    letter-spacing: 5px;
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-    opacity: 0;
-    animation: fadeUp 1s ease 0.5s forwards;
-}
-
-.brand-title {
-    font-size: 5rem;
-    font-weight: 800;
-    letter-spacing: 2px;
-    line-height: 1.1;
-    margin-bottom: 2rem;
-    background: var(--gold-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0px 10px 20px rgba(0,0,0,0.8));
-    opacity: 0;
-    animation: fadeUp 1s ease 0.8s forwards;
-}
-
-/* --- THE "ENTER" BUTTON --- */
-.enter-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 16px 40px;
-    border-radius: 50px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-size: 0.9rem;
-    font-weight: bold;
-    cursor: pointer;
+    /* COMPLETELY TRANSPARENT SO THE BOKEH SHINES THROUGH */
+    background: transparent !important; 
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
     
-    /* Glassmorphism Button */
-    color: var(--gold);
-    border: 1px solid var(--gold);
-    background: rgba(0,0,0,0.4);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    
-    transition: all 0.4s ease;
-    opacity: 0;
-    animation: fadeUp 1s ease 1.2s forwards;
+    /* Flawless Width Math */
+    width: calc(100% + var(--sidebar-width) + (var(--gap) * 2) + 3rem);
+    margin-left: calc(-1 * (var(--sidebar-width) + (var(--gap) * 2) + 1.5rem));
+    padding: 3rem calc(var(--sidebar-width) + (var(--gap) * 2) + 1.5rem) 2rem;
+    min-height: 100vh;
 }
 
-.enter-btn i { transition: transform 0.4s ease; }
-
-.enter-btn:hover {
-    background: var(--gold-gradient);
-    color: black;
-    box-shadow: 0 0 30px rgba(199, 163, 78, 0.5);
-}
-
-.enter-btn:hover i {
-    transform: translateX(5px); 
-}
-
-/* --- KEYFRAMES --- */
-@keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* --- MOBILE RESPONSIVE --- */
-@media (max-width: 768px) {
-    .brand-title { font-size: 3rem; }
-    .brand-subtitle { font-size: 0.75rem; letter-spacing: 3px; }
-    .enter-btn { padding: 14px 30px; font-size: 0.8rem; }
-}
-
-
-
-
-
-
-/* ============================
-   LAYOUT CONTAINER
-   ============================ */
 .home-grid {
     position: relative;
     width: 100%;
-    
-    /* DYNAMIC HEIGHT (Desktop) 
-       Matches the Sidebar height perfectly */
     height: calc(100vh - var(--cta-height) - (var(--gap) * 3));
-    
     margin-bottom: var(--gap);
     display: block; 
+    
+    /* 3D Perspective Setup */
+    perspective: 1000px; 
 }
 
+
 /* ============================
-   1. HERO CARD
+   2. HERO CARD (3D Parallax)
    ============================ */
 .hero-card {
     background: var(--bg-card);
@@ -158,32 +40,43 @@
     overflow: hidden;
     display: flex; 
     flex-direction: column; 
-    justify-content: flex-end; /* Pushes content to bottom */
+    justify-content: flex-end;
     padding: 3rem;
-    
     width: 100%;
     height: 100%;
+    
+    /* 3D Transform Settings */
+    transform-style: preserve-3d; 
+    will-change: transform;
 }
 
-/* Background Image */
 .hero-bg {
     position: absolute; 
     inset: 0;
     background-size: cover; 
     background-position: center;
     opacity: 0.6; 
-    transition: transform 10s ease;
     z-index: 0;
+    
+    /* Pushes background slightly back in 3D space */
+    transform: translateZ(-30px) scale(1.05); 
+    transition: transform 0.3s ease;
 }
-.hero-card:hover .hero-bg { transform: scale(1.05); }
 
-/* Hero Text Content */
+.hero-card:hover .hero-bg { 
+    transform: translateZ(-30px) scale(1.1); 
+}
+
 .hero-content { 
     position: relative; 
-    z-index: 1; 
+    z-index: 10; 
     pointer-events: none; 
     max-width: 60%; 
-    margin-bottom: 2rem; /* Space above widget */
+    margin-bottom: 2rem; 
+    
+    /* Pulls text forward in 3D space */
+    transform: translateZ(40px); 
+    transition: transform 0.3s ease;
 }
 .hero-content * { pointer-events: auto; } 
 
@@ -201,8 +94,17 @@
     display: inline-block;
 }
 
-.hero-content p { color: #ccc; margin-bottom: 2rem; max-width: 400px; font-size: 1.1rem; }
+.hero-content p { 
+    color: #ccc; 
+    margin-bottom: 2rem; 
+    max-width: 400px; 
+    font-size: 1.1rem; 
+}
 
+
+/* ============================
+   3. MAGNETIC BUTTON
+   ============================ */
 .btn-gold {
     display: inline-block; 
     background: var(--gold-gradient);
@@ -213,36 +115,42 @@
     text-transform: uppercase; 
     letter-spacing: 1px;
     font-size: 0.9rem; 
-    transition: 0.3s;
     border: none;
     cursor: pointer;
+    /* Removed box-shadow from the transition to keep it perfectly clean */
+    transition: background 0.3s, color 0.3s; 
 }
-.btn-gold:hover { background: white; box-shadow: 0 0 25px rgba(199, 163, 78, 0.6); }
 
+.btn-gold:hover { 
+    background: white; 
+}
 
 /* ============================
-   WIDGET OVERLAY (The Corner Box)
+   4. WIDGET OVERLAY (Corner Box)
    ============================ */
 .widget-card {
     position: absolute;
     bottom: 0;
     right: 0;
     z-index: 10;
-    
     width: 350px;
     height: auto;
     min-height: 280px;
-
     background: var(--bg-card);
     border-top-left-radius: 40px; 
     border-bottom-right-radius: 40px; 
-    
     padding: 2rem;
-    display: flex; flex-direction: column; justify-content: center;
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center;
     
-    /* Desktop Cutout Effect */
+    /* Kept cutout border style */
     border-top: 10px solid var(--bg-body);
     border-left: 10px solid var(--bg-body);
+    
+    /* Pulls widget forward in 3D space */
+    transform: translateZ(40px); 
+    transition: transform 0.3s ease;
 }
 
 .widget-card h3 { 
@@ -259,7 +167,7 @@
     padding: 10px; border-radius: 15px;
     transition: 0.2s;
 }
-.quick-list li a:hover { background: #222; }
+.quick-list li a:hover { background: rgba(255, 255, 255, 0.1); }
 
 .icon-box {
     width: 35px; height: 35px; 
@@ -273,21 +181,19 @@
 
 
 /* ============================
-   2. PROMO BANNER (Bottom Section)
+   5. PROMO BANNER
    ============================ */
 .promo-banner {
     height: var(--cta-height);
     width: 100%;
-    
-    background: linear-gradient(135deg, var(--bg-card) 0%, #0c0c0c 100%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.5) 100%);
+    backdrop-filter: blur(10px);
     border-radius: 40px; 
     padding: 0 3rem; 
-    border: 1px solid #222;
-    
+    border: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
@@ -305,71 +211,67 @@
     font-size: 2.5rem; 
     color: #222; 
     transition: 0.3s;
-    text-shadow: 0 0 2px rgba(255,255,255,0.1); 
 }
 .promo-banner:hover .promo-icon i {
     color: var(--gold);
-    text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
 }
 
 
 /* ============================
-   RESPONSIVE (Mobile Optimized)
+   6. RESPONSIVE (Mobile)
    ============================ */
 @media (max-width: 1024px) {
     
-    /* 1. RESET HEIGHTS */
+    #home-sliding-content { 
+        width: calc(100% + 2rem); 
+        margin-left: -1rem; 
+        padding: 2rem 1rem; 
+    }
+
     .home-grid { 
         height: auto; 
         margin-bottom: 20px; 
     }
     
-    /* 2. HERO CARD STACKING */
     .hero-card {
-        /* Make it tall enough to fit everything nicely */
         min-height: 85vh; 
         height: auto;
         border-radius: 30px;
         padding: 2rem 1.5rem;
-        
-        /* Ensure content stacks vertically */
         justify-content: space-between;
+        
+        /* Disable 3D tilt on mobile */
+        transform: none !important; 
+    }
+    
+    .hero-content, .widget-card, .hero-bg { 
+        transform: none !important; 
     }
 
-    /* 3. HERO TEXT */
     .hero-content { 
         max-width: 100%; 
         margin-top: 2rem;
     }
-    .hero-content h1 { font-size: 2.5rem; } /* Smaller title */
+    .hero-content h1 { font-size: 2.5rem; } 
     
-    /* 4. WIDGET (Services) TRANSFORMATION */
     .widget-card { 
-        position: relative; /* Stop floating */
+        position: relative; 
         width: 100%;
         height: auto;
         min-height: 0;
-        
-        /* Remove Cutout Borders */
-        border: 1px solid #333;
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 25px;
-        background: rgba(0,0,0,0.6); /* Semi-transparent */
+        background: rgba(0,0,0,0.6); 
         backdrop-filter: blur(10px);
-        
         margin-top: 2rem;
         padding: 1.5rem;
-        
-        /* Reset positioning coords */
         top: auto; right: auto; bottom: auto; left: auto;
     }
     
-    /* 5. PROMO BANNER STACKING */
     .promo-banner { 
         height: auto; 
         padding: 2rem 1.5rem; 
         border-radius: 30px;
-        
-        /* Stack Text and Icon */
         flex-direction: column; 
         text-align: center;
         gap: 1.5rem;

@@ -6,311 +6,305 @@
     <title>Golden Frames - Luxury Event Management</title>
     
     <script>
+        // FOR TESTING: Clear memory so you can see the intro every time you refresh
+        sessionStorage.removeItem('splashSeen'); 
+        
         if (sessionStorage.getItem('splashSeen') === 'true') {
             document.documentElement.classList.add('skip-splash');
         }
     </script>
-
+<script src="./assets/js/gallery.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
     <link rel="stylesheet" href="assets/css/global.css">
     <link rel="stylesheet" href="assets/css/home.css">
 
     <style>
-        /* --- SPLASH SCREEN WRAPPER --- */
-        #splash-screen {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            z-index: 999999;
-            background-color: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
+        /* ============================
+           1. LUXURY CUSTOM CURSOR
+           ============================ */
+        @media (min-width: 1025px) {
+            body, a, button, .faq-question, .scroll-indicator, .gallery-item { cursor: none !important; }
         }
-
-        .landing-video {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            object-fit: cover; 
-            z-index: 1;
-            filter: brightness(0.8); 
+        .cursor-dot, .cursor-ring {
+            position: fixed; top: 0; left: 0; pointer-events: none; z-index: 999999;
+            border-radius: 50%; transform: translate(-50%, -50%); display: none;
         }
-
-        .splash-overlay {
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.85) 100%);
-            z-index: 2;
+        @media (min-width: 1025px) {
+            .cursor-dot, .cursor-ring { display: block; }
         }
-
-        .landing-content {
-            position: relative;
-            z-index: 3;
-            text-align: center;
-            padding: 0 20px;
+        .cursor-dot { width: 8px; height: 8px; background-color: var(--gold); }
+        .cursor-ring { 
+            width: 40px; height: 40px; border: 1px solid var(--gold); 
+            transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
         }
-
-        .brand-subtitle {
-            color: #ccc;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-            opacity: 0;
-            animation: fadeUp 1s ease 0.5s forwards;
-        }
-
-        .brand-title {
-            font-size: 5rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-            line-height: 1.1;
-            margin-bottom: 2rem;
-            background: var(--gold-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0px 10px 20px rgba(0,0,0,0.8));
-            opacity: 0;
-            animation: fadeUp 1s ease 0.8s forwards;
-        }
-
-        .enter-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 16px 40px;
-            border-radius: 50px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            cursor: pointer;
-            
-            color: var(--gold);
-            border: 1px solid var(--gold);
-            background: rgba(0,0,0,0.4);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            
-            transition: all 0.4s ease;
-            opacity: 0;
-            animation: fadeUp 1s ease 1.2s forwards;
-        }
-
-        .enter-btn i { transition: transform 0.4s ease; }
-
-        .enter-btn:hover {
-            background: var(--gold-gradient);
-            color: black;
-            box-shadow: 0 0 30px rgba(199, 163, 78, 0.5);
-        }
-        .enter-btn:hover i { transform: translateX(5px); }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 768px) {
-            .brand-title { font-size: 3rem; }
-            .brand-subtitle { font-size: 0.75rem; letter-spacing: 3px; }
-            .enter-btn { padding: 14px 30px; font-size: 0.8rem; }
-        }
-        
-        .home-grid, .promo-banner, .sidebar, .cta-pill-container, .mobile-nav, .faq-section {
-            visibility: hidden;
-        }
-
-        html.skip-splash #splash-screen { display: none !important; }
-        html.skip-splash .home-grid, 
-        html.skip-splash .promo-banner, 
-        html.skip-splash .sidebar, 
-        html.skip-splash .cta-pill-container, 
-        html.skip-splash .mobile-nav,
-        html.skip-splash .faq-section {
-            visibility: visible !important;
+        .cursor-ring.hovered { 
+            width: 65px; height: 65px; 
+            background-color: rgba(199, 163, 78, 0.15); border-color: transparent; 
         }
 
         /* ============================
-           NEW: FAQ SECTION STYLES
+           2. INTERACTIVE AMBIENT HERO
            ============================ */
-        .faq-section {
-            padding: 5rem 0 2rem 0;
-            max-width: 800px;
-            margin: 0 auto;
+        #scroll-hero {
+            position: sticky; top: 0; height: 100vh;
+            width: calc(100% + var(--sidebar-width) + (var(--gap) * 2) + 3rem);
+            margin-left: calc(-1 * (var(--sidebar-width) + (var(--gap) * 2) + 1.5rem));
+            margin-top: -1.5rem; 
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden; background-color: #050505; z-index: 1; 
         }
-        .faq-header {
-            text-align: center;
-            margin-bottom: 3rem;
+
+        #interactive-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(circle at 50% 50%, #1a160b 0%, #000 100%);
+            z-index: 1; overflow: hidden;
         }
-        .faq-header h2 {
-            font-size: 2.5rem;
-            color: white;
-            margin-bottom: 1rem;
+
+        .ambient-glow {
+            position: absolute; width: 80vw; height: 80vw;
+            background: radial-gradient(circle, rgba(199, 163, 78, 0.08) 0%, transparent 60%);
+            border-radius: 50%; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); pointer-events: none;
         }
-        .faq-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            margin-bottom: 1rem;
-            overflow: hidden;
-            transition: all 0.3s ease;
+
+        .bokeh {
+            position: absolute; border-radius: 50%; background: var(--gold-gradient); filter: blur(50px); opacity: 0.3;
         }
-        .faq-question {
-            padding: 1.5rem;
-            display: flex;
-            justify-content: space-between;
+        .bokeh-1 { width: 400px; height: 400px; top: -10%; left: 10%; animation: float 18s infinite ease-in-out; }
+        .bokeh-2 { width: 300px; height: 300px; bottom: -5%; right: 15%; animation: float 22s infinite reverse ease-in-out; opacity: 0.2; }
+        .bokeh-3 { width: 200px; height: 200px; top: 40%; right: 30%; animation: float 15s infinite alternate ease-in-out; opacity: 0.15; }
+
+        @keyframes float {
+            0% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-40px) scale(1.05); }
+            100% { transform: translateY(0) scale(1); }
+        }
+
+        .splash-overlay { position: absolute; inset: 0; z-index: 2; background: radial-gradient(circle, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.9) 100%); }
+        .landing-content { position: relative; z-index: 3; text-align: center; pointer-events: none; }
+        .brand-subtitle { color: #ccc; text-transform: uppercase; letter-spacing: 5px; font-size: 0.9rem; margin-bottom: 1rem; opacity: 0; animation: fadeUp 1s ease 0.5s forwards; }
+        .brand-title { font-size: 5rem; font-weight: 800; letter-spacing: 2px; line-height: 1.1; margin: 0; background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0px 10px 20px rgba(0,0,0,0.8)); opacity: 0; animation: fadeUp 1s ease 0.8s forwards; }
+
+        .scroll-indicator { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 4; display: flex; flex-direction: column; align-items: center; gap: 15px; opacity: 0; animation: fadeUp 1s ease 1.5s forwards; }
+        .scroll-text { color: var(--gold); text-transform: uppercase; letter-spacing: 3px; font-size: 0.65rem; font-weight: bold; }
+        .scroll-line { width: 1px; height: 60px; background: rgba(255,255,255,0.2); position: relative; overflow: hidden; }
+        .scroll-line::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 50%; background: var(--gold); animation: scrollLineAnim 2s infinite ease-in-out; }
+        @keyframes scrollLineAnim { 0% { transform: translateY(-100%); } 100% { transform: translateY(200%); } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ============================
+           3. THE CURTAIN & ADDED SECTIONS
+           ============================ */
+        #home-sliding-content {
+            position: relative; z-index: 10; 
+            
+            /* MADE COMPLETELY TRANSPARENT SO BACKGROUND SHOWS */
+            background: transparent; 
+            box-shadow: none; 
+            
+            width: calc(100% + var(--sidebar-width) + (var(--gap) * 2) + 3rem);
+            margin-left: calc(-1 * (var(--sidebar-width) + (var(--gap) * 2) + 1.5rem));
+            padding: 3rem calc(var(--sidebar-width) + (var(--gap) * 2) + 1.5rem) 2rem;
+            min-height: 100vh;
+        }
+
+        .btn-gold {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            background: var(--gold-gradient); color: black;
+            padding: 15px 35px; border-radius: 50px; font-weight: bold;
+            text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; border: none;
+            transition: background 0.3s, box-shadow 0.3s, color 0.3s; 
+        }
+        .btn-gold:hover { background: white; box-shadow: 0 0 25px rgba(199, 163, 78, 0.6); }
+
+        /* --- GLASSMORPHISM SEO FEATURE --- */
+        .home-intro-glass {
+            max-width: 1100px;
+            margin: 6rem auto;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 40px;
+            padding: 4rem;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 4rem;
             align-items: center;
-            cursor: pointer;
-            color: white;
-            font-size: 1.1rem;
-            font-weight: 600;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
-        .faq-question i {
-            color: var(--gold);
-            transition: transform 0.3s ease;
+
+        .home-intro-left h2 { font-size: 3.2rem; color: white; line-height: 1.1; margin-bottom: 1rem; font-weight: 800; }
+        .home-intro-left .gold-line { width: 60px; height: 4px; background: var(--gold-gradient); border-radius: 2px; margin-top: 1.5rem; }
+        .home-intro-right p { color: var(--text-gray); font-size: 1.05rem; line-height: 1.8; margin-bottom: 1.5rem; }
+        .home-intro-right p:last-child { margin-bottom: 0; }
+        .home-intro-right strong { color: white; font-weight: 600; }
+
+        /* --- HOME MINI GALLERY --- */
+        .home-gallery-section { margin: 6rem 0; text-align: center; }
+        .home-gallery-section h2 { font-size: 2.5rem; color: white; margin-bottom: 0.5rem; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin: 3rem 0; }
+        .gallery-item { position: relative; height: 400px; border-radius: 20px; overflow: hidden; display: block; border: 1px solid rgba(255,255,255,0.05); }
+        .gallery-item-bg { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
+        .gallery-item:hover .gallery-item-bg { transform: scale(1.08); }
+        .gallery-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 50%); display: flex; align-items: flex-end; justify-content: center; padding: 2rem; transition: background 0.3s; }
+        .gallery-overlay h3 { color: white; font-size: 1.4rem; text-transform: uppercase; letter-spacing: 2px; transform: translateY(10px); transition: transform 0.3s, color 0.3s; }
+        .gallery-item:hover .gallery-overlay h3 { transform: translateY(0); color: var(--gold); }
+
+        /* --- MOBILE OVERRIDES --- */
+        @media (max-width: 1024px) {
+            .brand-title { font-size: 3rem; }
+            #scroll-hero { width: calc(100% + 2rem); margin-left: -1rem; margin-top: -1rem; }
+            #home-sliding-content { width: calc(100% + 2rem); margin-left: -1rem; padding: 2rem 1rem; }
+            .home-intro-glass { grid-template-columns: 1fr; gap: 2rem; padding: 2.5rem 1.5rem; text-align: center; }
+            .home-intro-left .gold-line { margin: 1.5rem auto; }
+            .home-intro-left h2 { font-size: 2.5rem; }
+            .gallery-grid { grid-template-columns: 1fr; } 
+            .gallery-item { height: 300px; }
         }
-        .faq-answer {
-            padding: 0 1.5rem;
-            max-height: 0;
-            overflow: hidden;
-            color: var(--text-gray);
-            line-height: 1.6;
-            transition: max-height 0.4s ease, padding 0.4s ease;
-        }
+
+        /* --- SKIP LOGIC & UI VISIBILITY --- */
+        /* Changed to only hide the text so the background stays! */
+        html.skip-splash .landing-content,
+        html.skip-splash .scroll-indicator,
+        html.skip-splash .splash-overlay { display: none !important; }
+        html.skip-splash #home-sliding-content { padding-top: 0; }
         
-        /* Active State for Accordion */
-        .faq-item.active {
-            background: rgba(199, 163, 78, 0.05);
-            border-color: var(--gold);
-        }
-        .faq-item.active .faq-question i {
-            transform: rotate(180deg);
-        }
-        .faq-item.active .faq-answer {
-            padding-bottom: 1.5rem;
-            max-height: 300px; 
-        }
+        .sidebar, .cta-pill-container, .mobile-nav { opacity: 0; visibility: hidden; transition: opacity 0.6s ease, visibility 0.6s ease; }
+        body.show-ui .sidebar, body.show-ui .cta-pill-container, body.show-ui .mobile-nav { opacity: 1; visibility: visible; }
+
+        /* --- FAQ SECTION --- */
+        .faq-section { padding: 4rem 0 2rem 0; max-width: 800px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,0.05); }
+        .faq-header { text-align: center; margin-bottom: 3rem; }
+        .faq-header h2 { font-size: 2.5rem; color: white; margin-bottom: 1rem; }
+        .faq-item { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; margin-bottom: 1rem; overflow: hidden; transition: all 0.3s ease; }
+        .faq-question { padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; color: white; font-size: 1.1rem; font-weight: 600; cursor: pointer; }
+        .faq-question i { color: var(--gold); transition: transform 0.3s ease; }
+        .faq-answer { padding: 0 1.5rem; max-height: 0; overflow: hidden; color: var(--text-gray); line-height: 1.6; transition: max-height 0.4s ease, padding 0.4s ease; }
+        .faq-item.active { background: rgba(199, 163, 78, 0.05); border-color: var(--gold); }
+        .faq-item.active .faq-question i { transform: rotate(180deg); }
+        .faq-item.active .faq-answer { padding-bottom: 1.5rem; max-height: 300px; }
     </style>
 </head>
 <body>
 
-    <div id="splash-screen">
-        <video class="landing-video" autoplay muted loop playsinline>
-            <source src="assets/images/system/gol2.mp4" type="video/mp4">
-        </video>
-        
-        <div class="splash-overlay"></div>
-        <div class="landing-content">
-            <p class="brand-subtitle">Est. 2014</p>
-            <h1 class="brand-title">GOLDEN<br>FRAMES</h1>
-            <button id="enter-site-btn" class="enter-btn">
-                Discover the Magic <i class="fas fa-arrow-right"></i>
-            </button>
-        </div>
-    </div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
 
     <div id="nav-placeholder"></div>
 
     <main class="main-content">
-        <div class="home-grid">
-            <div class="hero-card">
-                <div class="hero-bg" style="background-image: url('assets/images/home/hero-stage.jpg');"></div>
-                
-                <div class="hero-content">
-                    <h1>Creating <span class="text-gold">Timeless</span><br>Memories</h1>
-                    <p>Since 2014. Turning your Moments into a golden Memory.</p>
-                    <a href="contact.html" class="btn-gold">Book Consultation</a>
-                </div>
-
-                <div class="widget-card links-widget">
-                    <h3>Explore Services</h3> 
-                    <ul class="quick-list">
-                        <li>
-                            <a href="reviews.html">
-                                <div class="icon-box"><i class="fas fa-star"></i></div>
-                                <span>Reviews</span> 
-                            </a>
-                        </li>
-                        <li>
-                            <a href="about.html">
-                                <div class="icon-box"><i class="fas fa-info-circle"></i></div>
-                                <span>About us</span> 
-                            </a>
-                        </li>
-                        <li>
-                            <a href="gallery.html">
-                                <div class="icon-box"><i class="fas fa-images"></i></div>
-                                <span>Our Gallery</span> 
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+        
+        <section id="scroll-hero">
+            <div id="interactive-bg">
+                <div class="ambient-glow"></div>
+                <div class="bokeh bokeh-1"></div>
+                <div class="bokeh bokeh-2"></div>
+                <div class="bokeh bokeh-3"></div>
             </div>
-        </div>
-
-        <!-- <div class="promo-banner">
-            <div class="promo-content">
-                <div class="promo-text">
-                    <h2>Golden Package Offer</h2>
-                    <p>Get 20% off on full wedding planning bookings this month.</p>
-                </div>
-                <div class="promo-icon"><i class="fas fa-gift"></i></div>
+            <div class="splash-overlay"></div>
+            <div class="landing-content">
+                <p class="brand-subtitle">Est. 2014</p>
+                <h1 class="brand-title">GOLDEN<br>FRAMES</h1>
             </div>
-        </div> -->
-
-        <section class="faq-section">
-            <div class="faq-header">
-                <h2>Frequently Asked <span class="text-gold">Questions</span></h2>
-                <p style="color: var(--text-gray);">Everything you need to know about our premium services.</p>
-            </div>
-            
-            <div class="faq-container">
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Do you handle the entire wedding preparation?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        Yes, playing the role of comprehensive event planners, we take over the complete responsibility of the wedding preparations. All requirements are fulfilled under one roof so the occasion feels complete and stress-free for you.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Will you work within our specific budget?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        Absolutely. We make ourselves unique by working in favor of the needs of our clients above all else. We see to it that your budget does not put down the expectations. This is our trade secret to keeping our customers happy.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>When should we hire you for our wedding?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        Unlike other wedding event management companies, we take over our responsibilities well ahead of time. Contact us early so we can meet with you, make a detailed note of your requirements, and ensure perfect execution.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Do you manage Destination Weddings?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        Yes! We specialize in Premium Event Management and Destination Weddings across Kerala. Experience your dream wedding in God's Own Country with our expert planners handling every detail.
-                    </div>
-                </div>
+            <div class="scroll-indicator">
+                <span class="scroll-text">Scroll to Discover</span>
+                <div class="scroll-line"></div>
             </div>
         </section>
+
+        <div id="home-sliding-content">
+            
+            <div class="home-grid">
+                <div class="hero-card">
+                    <div class="hero-bg" style="background-image: url('assets/images/home/hero-stage.jpg');"></div>
+                    <div class="hero-content">
+                        <h1>Creating <span class="text-gold">Timeless</span><br>Memories</h1>
+                        <p>Since 2014. Turning your Moments into a golden Memory.</p>
+                        <a href="contact.html" class="btn-gold magnetic-btn">Book Consultation</a>
+                    </div>
+                    <div class="widget-card links-widget">
+                        <h3>Explore Services</h3> 
+                        <ul class="quick-list">
+                            <li><a href="reviews.html"><div class="icon-box"><i class="fas fa-star"></i></div><span>Reviews</span></a></li>
+                            <li><a href="about.html"><div class="icon-box"><i class="fas fa-info-circle"></i></div><span>About us</span></a></li>
+                            <li><a href="gallery.html"><div class="icon-box"><i class="fas fa-images"></i></div><span>Our Gallery</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <section class="home-intro-glass">
+                <div class="home-intro-left">
+                    <h2>Premium Event Planners in <span class="text-gold">Kerala</span></h2>
+                    <div class="gold-line"></div>
+                </div>
+                <div class="home-intro-right">
+                    <p><strong>Golden Frames</strong> is widely recognized as one of the best luxury event management agencies in Kerala. We distinguish ourselves by working entirely in favor of our clients' unique visions. Above all, our philosophy is simple: <strong>your budget should never put down your expectations</strong>. This dedication to flawless execution is the golden trade secret behind our ever-growing family of happy customers.</p>
+                    
+                    <p>Playing the role of dedicated wedding planners, we assume complete responsibility for your entire celebration. By doing so, we ensure the occasion feels complete in every possible manner. With us, all client requirements are fulfilled under one roof. Unlike standard event companies, we take over our responsibilities well ahead of time. We meet the client, make detailed notes of requirements, and anticipate challenges before they happen—ensuring that the hosts and guests alike remain perfectly satisfied from start to finish.</p>
+                </div>
+            </section>
+
+            <section class="home-gallery-section">
+                <h2>Our <span class="text-gold">Masterpieces</span></h2>
+                <p style="color: var(--text-gray); margin-bottom: 2rem;">A glimpse into the spectacular events we bring to life.</p>
+                
+                <div class="gallery-grid">
+                    
+                    <a href="event-detail.html?id=royal-wedding" class="gallery-item" target="_self" data-no-router>
+                        <div class="gallery-item-bg" style="background-image: url('assets/images/gallery/royal-wedding-main.jpg');"></div>
+                        <div class="gallery-overlay">
+                            <h3>Royal Wedding</h3>
+                        </div>
+                    </a>
+                    
+                    <a href="event-detail.html?id=destination-event" class="gallery-item" target="_self" data-no-router>
+                        <div class="gallery-item-bg" style="background-image: url('assets/images/gallery/destination-main.jpg');"></div>
+                        <div class="gallery-overlay">
+                            <h3>Destination Event</h3>
+                        </div>
+                    </a>
+
+                    <a href="event-detail.html?id=corporate-gala" class="gallery-item" target="_self" data-no-router>
+                        <div class="gallery-item-bg" style="background-image: url('assets/images/gallery/corporate-main.jpg');"></div>
+                        <div class="gallery-overlay">
+                            <h3>Corporate Gala</h3>
+                        </div>
+                    </a>
+                </div>
+
+                <a href="gallery.html" class="btn-gold" style="margin-top: 1rem;">
+                    View Full Gallery <i class="fas fa-arrow-right"></i>
+                </a>
+            </section>
+
+            <section class="faq-section">
+                <div class="faq-header">
+                    <h2>Frequently Asked <span class="text-gold">Questions</span></h2>
+                    <p style="color: var(--text-gray);">Everything you need to know about our premium services.</p>
+                </div>
+                
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question"><span>Do you handle the entire wedding preparation?</span><i class="fas fa-chevron-down"></i></div>
+                        <div class="faq-answer">Yes, playing the role of comprehensive event planners, we take over the complete responsibility of the wedding preparations.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question"><span>Will you work within our specific budget?</span><i class="fas fa-chevron-down"></i></div>
+                        <div class="faq-answer">Absolutely. We make ourselves unique by working in favor of the needs of our clients above all else.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question"><span>When should we hire you for our wedding?</span><i class="fas fa-chevron-down"></i></div>
+                        <div class="faq-answer">Unlike other wedding event management companies, we take over our responsibilities well ahead of time. Contact us early!</div>
+                    </div>
+                </div>
+            </section>
+        </div>
 
     </main>
 
@@ -320,63 +314,116 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             
-            // --- FAQ ACCORDION LOGIC ---
+            // --- 1. CUSTOM CURSOR & AMBIENT LOGIC ---
+            const dot = document.querySelector('.cursor-dot');
+            const ring = document.querySelector('.cursor-ring');
+            const glow = document.querySelector('.ambient-glow');
+            const bokeh1 = document.querySelector('.bokeh-1');
+            const bokeh2 = document.querySelector('.bokeh-2');
+            const bokeh3 = document.querySelector('.bokeh-3');
+
+            let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+            let ringX = mouseX, ringY = mouseY;
+
+            window.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX; mouseY = e.clientY;
+                gsap.set(dot, { x: mouseX, y: mouseY });
+
+                if (window.innerWidth > 1024) {
+                    gsap.to(glow, {
+                        x: mouseX - window.innerWidth / 2,
+                        y: mouseY - window.innerHeight / 2,
+                        duration: 1.5, ease: "power2.out"
+                    });
+
+                    const xNorm = (mouseX / window.innerWidth - 0.5);
+                    const yNorm = (mouseY / window.innerHeight - 0.5);
+                    
+                    gsap.to(bokeh1, { x: xNorm * -60, y: yNorm * -60, duration: 2 });
+                    gsap.to(bokeh2, { x: xNorm * 80, y: yNorm * 80, duration: 2 });
+                    gsap.to(bokeh3, { x: xNorm * -40, y: yNorm * 40, duration: 2 });
+                }
+            });
+
+            gsap.ticker.add(() => {
+                ringX += (mouseX - ringX) * 0.15; 
+                ringY += (mouseY - ringY) * 0.15;
+                gsap.set(ring, { x: ringX, y: ringY });
+            });
+
+            const addHoverEffect = () => {
+                document.querySelectorAll('a, button, .faq-question, .magnetic-btn, .gallery-item').forEach(el => {
+                    if(!el.dataset.cursorAttached) {
+                        el.dataset.cursorAttached = "true";
+                        el.addEventListener('mouseenter', () => ring.classList.add('hovered'));
+                        el.addEventListener('mouseleave', () => ring.classList.remove('hovered'));
+                    }
+                });
+            };
+            addHoverEffect(); 
+
+            // --- 2. MAGNETIC BUTTON LOGIC ---
+            document.querySelectorAll('.magnetic-btn').forEach(btn => {
+                btn.addEventListener('mousemove', (e) => {
+                    const rect = btn.getBoundingClientRect();
+                    const h = rect.width / 2;
+                    const v = rect.height / 2;
+                    const x = e.clientX - rect.left - h;
+                    const y = e.clientY - rect.top - v;
+                    gsap.to(btn, { x: x * 0.4, y: y * 0.4, duration: 0.3, ease: "power2.out" });
+                });
+                btn.addEventListener('mouseleave', () => {
+                    gsap.to(btn, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.3)" });
+                });
+            });
+
+            // --- 3. SCROLL ANIMATION (Scale to Top) ---
+            if (sessionStorage.getItem('splashSeen') !== 'true') {
+                gsap.registerPlugin(ScrollTrigger);
+
+                // This specifically moves the text up, shrinks it, and fades it out
+                gsap.to(".landing-content", {
+                    scrollTrigger: { trigger: "body", start: "top top", end: "500px", scrub: 1 },
+                    y: -250, scale: 0.85, opacity: 0, ease: "power1.out"
+                });
+
+                // Scroll indicator drops down and fades out
+                gsap.to(".scroll-indicator", {
+                    scrollTrigger: { trigger: "body", start: "top top", end: "500px", scrub: 1 },
+                    y: 100, opacity: 0, ease: "power1.out"
+                });
+
+                // Note: #interactive-bg has been completely REMOVED from the fade-out animation 
+                // so it stays perfectly visible behind your transparent home content!
+
+                ScrollTrigger.create({
+                    trigger: "#home-sliding-content",
+                    start: "top 50%", 
+                    onEnter: () => {
+                        document.body.classList.add('show-ui');
+                        sessionStorage.setItem('splashSeen', 'true');
+                    },
+                    onLeaveBack: () => document.body.classList.remove('show-ui')
+                });
+            } else {
+                // If splash is skipped, make sure the UI still shows!
+                document.body.classList.add('show-ui');
+            }
+
+            // --- 4. FAQ ACCORDION LOGIC ---
             const faqItems = document.querySelectorAll('.faq-item');
             faqItems.forEach(item => {
                 const question = item.querySelector('.faq-question');
                 question.addEventListener('click', () => {
-                    // Close other open items
                     faqItems.forEach(otherItem => {
                         if (otherItem !== item && otherItem.classList.contains('active')) {
                             otherItem.classList.remove('active');
                         }
                     });
-                    // Toggle the clicked item
                     item.classList.toggle('active');
                 });
             });
 
-            // --- SPLASH SCREEN LOGIC ---
-            if (sessionStorage.getItem('splashSeen') === 'true') {
-                document.body.style.overflow = ''; 
-                return; 
-            }
-
-            document.body.style.overflow = 'hidden';
-            const enterBtn = document.getElementById('enter-site-btn');
-            
-            if (enterBtn) {
-                enterBtn.addEventListener('click', () => {
-                    sessionStorage.setItem('splashSeen', 'true');
-                    
-                    const tl = gsap.timeline({
-                        onComplete: () => {
-                            document.getElementById('splash-screen').style.display = 'none';
-                            document.body.style.overflow = ''; 
-                        }
-                    });
-
-                    tl.to(".landing-content", {
-                        scale: 1.15, opacity: 0, duration: 0.8, ease: "power2.inOut"
-                    })
-                    .to("#splash-screen", {
-                        opacity: 0, duration: 1.2, ease: "power2.inOut"
-                    }, "-=0.4")
-                    .set(".home-grid, .promo-banner, .sidebar, .cta-pill-container, .mobile-nav, .faq-section", { visibility: "visible" }, "-=1.2")
-                    .from(".home-grid", {
-                        scale: 1.04, opacity: 0, duration: 1.8, ease: "power3.out"
-                    }, "-=1.2")
-                    .from(".hero-content > *", {
-                        y: 20, opacity: 0, duration: 1.2, stagger: 0.1, ease: "power3.out"
-                    }, "-=1.2")
-                    .from(".sidebar, .cta-pill-container, .mobile-nav", {
-                        opacity: 0, duration: 1.5, ease: "power2.out"
-                    }, "-=1.0")
-                    .from(".widget-card, .promo-banner, .faq-section", {
-                        y: 15, opacity: 0, duration: 1.2, stagger: 0.15, ease: "power3.out"
-                    }, "-=1.0");
-                });
-            }
         });
     </script>
 </body>
