@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Golden Frames - Luxury Event Management</title>
+    <title>Lamar Home Gallery - Premium Sanitary & Home Gallery</title>
     
     <script>
         // FOR TESTING: Clear memory so you can see the intro every time you refresh
@@ -13,7 +13,7 @@
             document.documentElement.classList.add('skip-splash');
         }
     </script>
-<script src="./assets/js/gallery.js"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -86,8 +86,22 @@
 
         .splash-overlay { position: absolute; inset: 0; z-index: 2; background: radial-gradient(circle, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.9) 100%); }
         .landing-content { position: relative; z-index: 3; text-align: center; pointer-events: none; }
+        
+        /* Typography Updates */
         .brand-subtitle { color: #ccc; text-transform: uppercase; letter-spacing: 5px; font-size: 0.9rem; margin-bottom: 1rem; opacity: 0; animation: fadeUp 1s ease 0.5s forwards; }
-        .brand-title { font-size: 5rem; font-weight: 800; letter-spacing: 2px; line-height: 1.1; margin: 0; background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0px 10px 20px rgba(0,0,0,0.8)); opacity: 0; animation: fadeUp 1s ease 0.8s forwards; }
+        .brand-title { font-size: 5rem; font-weight: 800; letter-spacing: 2px; line-height: 1.1; margin: 0; background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0px 10px 20px rgba(0,0,0,0.8)); opacity: 0; animation: fadeUp 1s ease 0.8s forwards; font-family: Didot; }
+        
+        /* NEW TAGLINE */
+        .brand-tagline { 
+            color: var(--gold); 
+            text-transform: uppercase; 
+            letter-spacing: 6px; 
+            font-size: 0.85rem; 
+            font-weight: 600;
+            margin-top: 1.5rem; 
+            opacity: 0; 
+            animation: fadeUp 1s ease 1.1s forwards; /* Fades in right after the title */
+        }
 
         .scroll-indicator { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 4; display: flex; flex-direction: column; align-items: center; gap: 15px; opacity: 0; animation: fadeUp 1s ease 1.5s forwards; }
         .scroll-text { color: var(--gold); text-transform: uppercase; letter-spacing: 3px; font-size: 0.65rem; font-weight: bold; }
@@ -101,11 +115,8 @@
            ============================ */
         #home-sliding-content {
             position: relative; z-index: 10; 
-            
-            /* MADE COMPLETELY TRANSPARENT SO BACKGROUND SHOWS */
             background: transparent; 
             box-shadow: none; 
-            
             width: calc(100% + var(--sidebar-width) + (var(--gap) * 2) + 3rem);
             margin-left: calc(-1 * (var(--sidebar-width) + (var(--gap) * 2) + 1.5rem));
             padding: 3rem calc(var(--sidebar-width) + (var(--gap) * 2) + 1.5rem) 2rem;
@@ -158,6 +169,7 @@
         /* --- MOBILE OVERRIDES --- */
         @media (max-width: 1024px) {
             .brand-title { font-size: 3rem; }
+            .brand-tagline { font-size: 0.7rem; letter-spacing: 4px; } /* Scales tagline down for mobile */
             #scroll-hero { width: calc(100% + 2rem); margin-left: -1rem; margin-top: -1rem; }
             #home-sliding-content { width: calc(100% + 2rem); margin-left: -1rem; padding: 2rem 1rem; }
             .home-intro-glass { grid-template-columns: 1fr; gap: 2rem; padding: 2.5rem 1.5rem; text-align: center; }
@@ -168,7 +180,6 @@
         }
 
         /* --- SKIP LOGIC & UI VISIBILITY --- */
-        /* Changed to only hide the text so the background stays! */
         html.skip-splash .landing-content,
         html.skip-splash .scroll-indicator,
         html.skip-splash .splash-overlay { display: none !important; }
@@ -209,7 +220,8 @@
             <div class="splash-overlay"></div>
             <div class="landing-content">
                 <p class="brand-subtitle">Est. 2014</p>
-                <h1 class="brand-title">GOLDEN<br>FRAMES</h1>
+                <h1 class="brand-title">LAMAR<br>HOME GALLERY</h1>
+                <p class="brand-tagline">Sanitary & Home Gallery</p>
             </div>
             <div class="scroll-indicator">
                 <span class="scroll-text">Scroll to Discover</span>
@@ -223,8 +235,8 @@
                 <div class="hero-card">
                     <div class="hero-bg" style="background-image: url('assets/images/home/hero-stage.jpg');"></div>
                     <div class="hero-content">
-                        <h1>Creating <span class="text-gold">Timeless</span><br>Memories</h1>
-                        <p>Since 2014. Turning your Moments into a golden Memory.</p>
+                        <h1>Creating <span class="text-gold">Timeless</span><br>Spaces</h1>
+                        <p>Since 2014. Turning your House into a dream Home.</p>
                         <a href="contact.html" class="btn-gold magnetic-btn">Book Consultation</a>
                     </div>
                     <div class="widget-card links-widget">
@@ -240,40 +252,39 @@
 
             <section class="home-intro-glass">
                 <div class="home-intro-left">
-                    <h2>Premium Event Planners in <span class="text-gold">Kerala</span></h2>
+                    <h2>Premium Sanitary & Home Gallery in <span class="text-gold">Kerala</span></h2>
                     <div class="gold-line"></div>
                 </div>
                 <div class="home-intro-right">
-                    <p><strong>Golden Frames</strong> is widely recognized as one of the best luxury event management agencies in Kerala. We distinguish ourselves by working entirely in favor of our clients' unique visions. Above all, our philosophy is simple: <strong>your budget should never put down your expectations</strong>. This dedication to flawless execution is the golden trade secret behind our ever-growing family of happy customers.</p>
+                    <p><strong>Lamar Home Gallery</strong> is widely recognized as one of the finest providers of luxury sanitary ware, expressive tiles, and premium home fittings in Kerala. We distinguish ourselves by curating collections that align with our clients' unique visions for their dream homes. Above all, our philosophy is simple: <strong>uncompromising quality and stunning aesthetics for every space</strong>.</p>
                     
-                    <p>Playing the role of dedicated wedding planners, we assume complete responsibility for your entire celebration. By doing so, we ensure the occasion feels complete in every possible manner. With us, all client requirements are fulfilled under one roof. Unlike standard event companies, we take over our responsibilities well ahead of time. We meet the client, make detailed notes of requirements, and anticipate challenges before they happen—ensuring that the hosts and guests alike remain perfectly satisfied from start to finish.</p>
+                    <p>Acting as your trusted home improvement partner, we offer complete solutions for your interior needs. From beautiful modern bathrooms to spectacular flooring and decor, we ensure every detail is perfect. With us, all your home gallery requirements are fulfilled under one roof. We help you select the best materials, make detailed notes of your architectural requirements, and provide expert guidance to ensure your home remains spectacular for a lifetime.</p>
                 </div>
             </section>
 
             <section class="home-gallery-section">
-                <h2>Our <span class="text-gold">Masterpieces</span></h2>
-                <p style="color: var(--text-gray); margin-bottom: 2rem;">A glimpse into the spectacular events we bring to life.</p>
+                <h2>Our <span class="text-gold">Collections</span></h2>
+                <p style="color: var(--text-gray); margin-bottom: 2rem;">A glimpse into the spectacular spaces we help create.</p>
                 
                 <div class="gallery-grid">
-                    
                     <a href="event-detail.html?id=royal-wedding" class="gallery-item" target="_self" data-no-router>
                         <div class="gallery-item-bg" style="background-image: url('assets/images/gallery/royal-wedding-main.jpg');"></div>
                         <div class="gallery-overlay">
-                            <h3>Royal Wedding</h3>
+                            <h3>Luxury Bathrooms</h3>
                         </div>
                     </a>
                     
                     <a href="event-detail.html?id=destination-event" class="gallery-item" target="_self" data-no-router>
                         <div class="gallery-item-bg" style="background-image: url('assets/images/gallery/destination-main.jpg');"></div>
                         <div class="gallery-overlay">
-                            <h3>Destination Event</h3>
+                            <h3>Designer Tiles</h3>
                         </div>
                     </a>
 
                     <a href="event-detail.html?id=corporate-gala" class="gallery-item" target="_self" data-no-router>
                         <div class="gallery-item-bg" style="background-image: url('assets/images/gallery/corporate-main.jpg');"></div>
                         <div class="gallery-overlay">
-                            <h3>Corporate Gala</h3>
+                            <h3>Premium Fittings</h3>
                         </div>
                     </a>
                 </div>
@@ -291,16 +302,16 @@
                 
                 <div class="faq-container">
                     <div class="faq-item">
-                        <div class="faq-question"><span>Do you handle the entire wedding preparation?</span><i class="fas fa-chevron-down"></i></div>
-                        <div class="faq-answer">Yes, playing the role of comprehensive event planners, we take over the complete responsibility of the wedding preparations.</div>
+                        <div class="faq-question"><span>Do you offer installation services?</span><i class="fas fa-chevron-down"></i></div>
+                        <div class="faq-answer">Yes, we can connect you with expert installers to ensure your sanitary ware and tiles are fitted perfectly.</div>
                     </div>
                     <div class="faq-item">
                         <div class="faq-question"><span>Will you work within our specific budget?</span><i class="fas fa-chevron-down"></i></div>
-                        <div class="faq-answer">Absolutely. We make ourselves unique by working in favor of the needs of our clients above all else.</div>
+                        <div class="faq-answer">Absolutely. We have a wide range of collections to fit any budget without compromising on quality or aesthetics.</div>
                     </div>
                     <div class="faq-item">
-                        <div class="faq-question"><span>When should we hire you for our wedding?</span><i class="fas fa-chevron-down"></i></div>
-                        <div class="faq-answer">Unlike other wedding event management companies, we take over our responsibilities well ahead of time. Contact us early!</div>
+                        <div class="faq-question"><span>Do you handle bulk orders for commercial projects?</span><i class="fas fa-chevron-down"></i></div>
+                        <div class="faq-answer">Yes! We frequently supply premium tiles and fittings for large residential and commercial projects. Contact us for bulk pricing.</div>
                     </div>
                 </div>
             </section>
@@ -381,20 +392,15 @@
             if (sessionStorage.getItem('splashSeen') !== 'true') {
                 gsap.registerPlugin(ScrollTrigger);
 
-                // This specifically moves the text up, shrinks it, and fades it out
                 gsap.to(".landing-content", {
                     scrollTrigger: { trigger: "body", start: "top top", end: "500px", scrub: 1 },
                     y: -250, scale: 0.85, opacity: 0, ease: "power1.out"
                 });
 
-                // Scroll indicator drops down and fades out
                 gsap.to(".scroll-indicator", {
                     scrollTrigger: { trigger: "body", start: "top top", end: "500px", scrub: 1 },
                     y: 100, opacity: 0, ease: "power1.out"
                 });
-
-                // Note: #interactive-bg has been completely REMOVED from the fade-out animation 
-                // so it stays perfectly visible behind your transparent home content!
 
                 ScrollTrigger.create({
                     trigger: "#home-sliding-content",
@@ -406,7 +412,6 @@
                     onLeaveBack: () => document.body.classList.remove('show-ui')
                 });
             } else {
-                // If splash is skipped, make sure the UI still shows!
                 document.body.classList.add('show-ui');
             }
 

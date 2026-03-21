@@ -9,44 +9,59 @@
 
 /* --- VARIABLES --- */
 :root {
-    --bg-body: #000000;
-    --bg-card: #3a3a3a6d;
-    --bg-sidebar: #000000;
-    
-    /* NEW RICH GOLD PALETTE */
-    /* A richer solid gold for simple borders/text */
-    --gold: #C7A34E; 
+    --bg-body: #ffffff;
+    --bg-card: #ffffff;
+    --bg-sidebar: #ffffff;
+
+    /* NEW BRAND PALETTE */
+    /* Primary blue for simple borders/text */
+    --gold: #0b82c4;
     /* A metallic gradient for buttons and backgrounds */
-    --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
-    
+    --gold-gradient: linear-gradient(135deg, #0b82c4, #42a1db, #0b82c4, #73c0f2, #075f91);
+
     --text-white: #ffffff;
     --text-gray: #ffffffd4;
-    
+
     /* Layout Dimensions */
-    --sidebar-width: 100px; 
-    --gap: 20px;            
-    --cta-height: 180px;    
-    --sidebar-width-mobile: 60px; 
+    --sidebar-width: 100px;
+    --gap: 20px;
+    --cta-height: 180px;
+    --sidebar-width-mobile: 60px;
     --gap-mobile: 10px;
 }
 
 /* --- RESET & BODY --- */
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
 
-body { 
-    
+body {
+
     /* FIX: Make background constant during scroll */
     background-attachment: fixed;
-    background-size: cover; /* Ensures it stretches to fit the screen */
-    background-position: center; /* Keeps it centered */
-    background-repeat: no-repeat; /* Prevents tiling */
-    color: var(--text-white); 
-    display: flex; 
-    min-height: 100vh; 
-    overflow-x: hidden; 
+    background-size: cover;
+    /* Ensures it stretches to fit the screen */
+    background-position: center;
+    /* Keeps it centered */
+    background-repeat: no-repeat;
+    /* Prevents tiling */
+    color: var(--text-white);
+    display: flex;
+    min-height: 100vh;
+    overflow-x: hidden;
 }
-a { text-decoration: none; color: inherit; }
-ul { list-style: none; }
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
 
 /* ============================
    1. MAIN NAVIGATION PILL (Top Left)
@@ -60,18 +75,29 @@ ul { list-style: none; }
     left: var(--gap);
     width: var(--sidebar-width);
     height: calc(100vh - var(--cta-height) - (var(--gap) * 3));
-    
-    /* --- BOOSTED GLASS EFFECT --- */
-    background: var(--bg-card) !important; /* Brighter white tint so you can ACTUALLY see it */
 
-    
+    /* --- BOOSTED GLASS EFFECT --- */
+    background: var(--bg-card) !important;
+    /* Brighter white tint so you can ACTUALLY see it */
+
+
     border-radius: 50px;
     display: flex;
     flex-direction: column;
     padding: 2rem 0;
-    z-index: 9999 !important; /* Forces it above absolutely everything */
+    z-index: 9999 !important;
+    /* Forces it above absolutely everything */
     align-items: center;
-    overflow: hidden; 
+    overflow: hidden;
+
+    overflow-y: hidden;
+    height: 200px var(--sidebar-width);
+    width: calc(100vh - var(--cta-height) - (var(--gap) * 3));
+    font-family: sans-serif;
+    bottom: 20px;
+    block-size: 29px;
+    border-radius: 0%;
+    border: 1px solid var(--gold);
 }
 
 /* ============================
@@ -81,15 +107,16 @@ ul { list-style: none; }
     position: fixed !important;
     bottom: var(--gap);
     left: var(--gap);
-    width: var(--sidebar-width); 
+    width: var(--sidebar-width);
     height: var(--cta-height);
-    
+
     /* --- BOOSTED GLASS EFFECT --- */
-    background: var(--bg-card) !important; /* Brighter white tint so you can ACTUALLY see it */
-    
-    border-radius: 50px; 
+    background: var(--bg-card) !important;
+    /* Brighter white tint so you can ACTUALLY see it */
+
+    border-radius: 50px;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 20px;
@@ -103,7 +130,7 @@ ul { list-style: none; }
     justify-content: center;
     padding-top: 1rem;
     padding-bottom: 2rem;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
 .nav-links {
@@ -115,26 +142,35 @@ ul { list-style: none; }
     justify-content: space-between;
 }
 
-.nav-links li { width: auto; }
+.nav-links li {
+    width: auto;
+}
 
 .nav-links a {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 50px; 
+    width: 50px;
     height: 50px;
-    color: var(--text-gray); 
-    border-radius: 50%; 
+    color: var(--text-gray);
+    border-radius: 50%;
     transition: all 0.3s ease;
 }
 
-.nav-links i { display: block; font-size: 1.4rem; }
-.nav-links span { display: none; }
+.nav-links i {
+    display: block;
+    font-size: 1.4rem;
+}
 
-.nav-links a:hover, .nav-links a.active { 
-    color: black; 
-    background: var(--gold-gradient); 
-    box-shadow: 0 0 20px rgba(199, 163, 78, 0.4);
+.nav-links span {
+    display: none;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: black;
+    background: var(--gold-gradient);
+    box-shadow: 0 0 20px rgba(11, 130, 196, 0.4);
     transform: scale(1.1);
 }
 
@@ -143,53 +179,93 @@ ul { list-style: none; }
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-top: 1px solid rgba(255,255,255,0.1); /* Make border match glass */
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    /* Make border match glass */
     width: 60%;
     padding-top: 1rem;
 }
+
 .logo-circle {
-    width: 40px; height: 40px;
-    border-radius: 50%; 
-    border: 1px solid var(--gold); 
-    overflow: hidden; margin-bottom: 5px; padding: 2px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+    overflow: hidden;
+    margin-bottom: 5px;
+    padding: 2px;
 }
-.logo-circle img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-.brand-name { display: none; }
+
+.logo-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.brand-name {
+    display: none;
+}
 
 
 
 .cta-icon-btn {
-    width: 50px; height: 50px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 1.4rem;
     transition: transform 0.2s, background 0.3s;
-    border: 1px solid rgba(255,255,255,0.2); /* Lighter border for buttons on glass */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    /* Lighter border for buttons on glass */
 }
 
-.cta-icon-btn:hover { transform: scale(1.1); border-color: var(--gold); }
-.btn-wa { background: rgba(0,0,0,0.5); color: var(--gold); }
-.btn-wa:hover { background: var(--gold-gradient); color: white; }
-.btn-call { background: rgba(0,0,0,0.5); color: white; }
-.btn-call:hover { background: var(--gold-gradient); color: black; }
+.cta-icon-btn:hover {
+    transform: scale(1.1);
+    border-color: var(--gold);
+}
+
+.btn-wa {
+    background: rgba(0, 0, 0, 0.5);
+    color: var(--gold);
+}
+
+.btn-wa:hover {
+    background: var(--gold-gradient);
+    color: white;
+}
+
+.btn-call {
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+.btn-call:hover {
+    background: var(--gold-gradient);
+    color: black;
+}
 
 /* ============================
    MAIN CONTENT
    ============================ */
 .main-content {
     /* FORCES the content to ignore the sidebar and span the full screen */
-    margin-left: 0 !important; 
-    width: 100vw !important; /* Use viewport width to be 100% certain */
-    
+    margin-left: 0 !important;
+    width: 100vw !important;
+    /* Use viewport width to be 100% certain */
+
     /* Ensures text doesn't slip under the sidebar */
     padding: 1.5rem;
-    padding-left: calc(var(--sidebar-width) + (var(--gap) * 2) + 1.5rem) !important; 
+    padding-left: calc(var(--sidebar-width) + (var(--gap) * 2) + 1.5rem) !important;
 }
 
 /* ============================
    MOBILE RESPONSIVE
    ============================ */
-.mobile-nav { display: none; } 
+.mobile-nav {
+    display: none;
+}
 
 
 /* ============================
@@ -201,12 +277,14 @@ ul { list-style: none; }
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--bg-body); /* Matches your deep black background */
+    background-color: var(--bg-body);
+    /* Matches your deep black background */
     z-index: 9999;
-    
+
     /* Start fully visible to hide the "flash" of loading */
-    opacity: 1; 
-    pointer-events: all; /* Block clicks while loading */
+    opacity: 1;
+    pointer-events: all;
+    /* Block clicks while loading */
 }
 
 
@@ -223,28 +301,32 @@ ul { list-style: none; }
    MOBILE RESPONSIVE (BOTTOM NAV BAR)
    ============================ */
 @media (max-width: 1024px) {
-    
+
     /* 1. HIDE DESKTOP SIDEBAR & PILLS ON MOBILE */
-    .sidebar, .cta-pill-container {
+    .sidebar,
+    .cta-pill-container {
         display: none !important;
     }
 
     /* 2. SHOW & STYLE BOTTOM NAVIGATION BAR */
-    .mobile-nav { 
-        display: flex !important; /* Overrides previous hidden state */
+    .mobile-nav {
+        display: flex !important;
+        /* Overrides previous hidden state */
         position: fixed;
         bottom: 10px;
         width: 100%;
         height: 75px;
-        background: #0a0a0a; /* Deep black to match theme */
+        background: #0a0a0a;
+        /* Deep black to match theme */
         border: 1px solid var(--gold);
-        border-radius: 50px; /* Rounded top corners only */
+        border-radius: 50px;
+        /* Rounded top corners only */
         z-index: 9999;
         justify-content: space-around;
         align-items: center;
         padding: 0 10px;
         /* Adds a shadow above the bar for depth */
-        box-shadow: 0 -10px 30px rgba(0,0,0,0.8); 
+        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.8);
     }
 
     /* Standard Mobile Items */
@@ -265,22 +347,26 @@ ul { list-style: none; }
     }
 
     /* Active & Hover States */
-    .mobile-item:hover, .mobile-item.active {
+    .mobile-item:hover,
+    .mobile-item.active {
         color: var(--gold);
     }
 
     /* 3. CENTER FLOATING BUTTON (The "+" Contact Icon) */
     .mobile-center-btn {
         position: relative;
-        top: -25px; /* Pulls it up above the bar */
+        top: -25px;
+        /* Pulls it up above the bar */
         width: 65px;
         height: 65px;
         background: var(--gold-gradient);
         border-radius: 50%;
         color: black !important;
-        border: 5px solid var(--bg-body); /* Creates a cutout effect */
-        box-shadow: 0 5px 20px rgba(199, 163, 78, 0.4);
-        flex: none; /* Prevents it from shrinking */
+        border: 5px solid var(--bg-body);
+        /* Creates a cutout effect */
+        box-shadow: 0 5px 20px rgba(11, 130, 196, 0.4);
+        flex: none;
+        /* Prevents it from shrinking */
     }
 
     .mobile-center-btn i {
@@ -288,16 +374,19 @@ ul { list-style: none; }
     }
 
     /* 4. CONTENT LAYOUT ADJUSTMENT */
-.sidebar, .cta-pill-container {
+    .sidebar,
+    .cta-pill-container {
         display: none !important;
     }
 
     /* FIX: Remove the massive left padding on mobile */
     .main-content {
-        padding: 1rem !important; /* Resets left/right padding to standard */
-        padding-bottom: 120px !important; /* Keeps space at bottom for the mobile nav bar */
+        padding: 1rem !important;
+        /* Resets left/right padding to standard */
+        padding-bottom: 120px !important;
+        /* Keeps space at bottom for the mobile nav bar */
     }
-    
+
     /* Optional: Center the header on mobile so it looks balanced */
     .event-detail-header {
         padding-left: 0 !important;
@@ -313,24 +402,56 @@ ul { list-style: none; }
    LUXURY CUSTOM CURSOR (GLOBAL)
    ============================ */
 @media (min-width: 1025px) {
+
     /* Hides the default pointer on desktop */
-    body, a, button, .faq-question, .scroll-indicator, .magnetic-btn { cursor: none !important; }
+    body,
+    a,
+    button,
+    .faq-question,
+    .scroll-indicator,
+    .magnetic-btn {
+        cursor: none !important;
+    }
 }
-.cursor-dot, .cursor-ring {
-    position: fixed; top: 0; left: 0; pointer-events: none; z-index: 999999;
-    border-radius: 50%; transform: translate(-50%, -50%); display: none;
+
+.cursor-dot,
+.cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 999999;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
 }
+
 @media (min-width: 1025px) {
-    .cursor-dot, .cursor-ring { display: block; }
+
+    .cursor-dot,
+    .cursor-ring {
+        display: block;
+    }
 }
-.cursor-dot { width: 8px; height: 8px; background-color: var(--gold); }
-.cursor-ring { 
-    width: 40px; height: 40px; border: 1px solid var(--gold); 
+
+.cursor-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--gold);
+}
+
+.cursor-ring {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--gold);
     transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
 }
-.cursor-ring.hovered { 
-    width: 65px; height: 65px; 
-    background-color: rgba(199, 163, 78, 0.15); border-color: transparent; 
+
+.cursor-ring.hovered {
+    width: 65px;
+    height: 65px;
+    background-color: rgba(11, 130, 196, 0.15);
+    border-color: transparent;
 }
 
 
@@ -347,31 +468,74 @@ ul { list-style: none; }
    ============================ */
 #global-interactive-bg {
     position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     background-image: radial-gradient(circle at 50% 50%, #1a160b 0%, #000 100%);
-    z-index: -999; /* Keeps it permanently behind everything */
+    z-index: -999;
+    /* Keeps it permanently behind everything */
     overflow: hidden;
-    pointer-events: none; /* Prevents it from blocking clicks */
+    pointer-events: none;
+    /* Prevents it from blocking clicks */
 }
 
 .ambient-glow {
-    position: absolute; width: 80vw; height: 80vw;
-    background: radial-gradient(circle, rgba(199, 163, 78, 0.08) 0%, transparent 60%);
-    border-radius: 50%; top: 50%; left: 50%;
+    position: absolute;
+    width: 80vw;
+    height: 80vw;
+    background: radial-gradient(circle, rgba(11, 130, 196, 0.08) 0%, transparent 60%);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
     pointer-events: none;
 }
 
 .bokeh {
-    position: absolute; border-radius: 50%;
-    background: var(--gold-gradient); filter: blur(50px); opacity: 0.3;
+    position: absolute;
+    border-radius: 50%;
+    background: var(--gold-gradient);
+    filter: blur(50px);
+    opacity: 0.3;
 }
-.bokeh-1 { width: 400px; height: 400px; top: -10%; left: 10%; animation: float 18s infinite ease-in-out; }
-.bokeh-2 { width: 300px; height: 300px; bottom: -5%; right: 15%; animation: float 22s infinite reverse ease-in-out; opacity: 0.2; }
-.bokeh-3 { width: 200px; height: 200px; top: 40%; right: 30%; animation: float 15s infinite alternate ease-in-out; opacity: 0.15; }
+
+.bokeh-1 {
+    width: 400px;
+    height: 400px;
+    top: -10%;
+    left: 10%;
+    animation: float 18s infinite ease-in-out;
+}
+
+.bokeh-2 {
+    width: 300px;
+    height: 300px;
+    bottom: -5%;
+    right: 15%;
+    animation: float 22s infinite reverse ease-in-out;
+    opacity: 0.2;
+}
+
+.bokeh-3 {
+    width: 200px;
+    height: 200px;
+    top: 40%;
+    right: 30%;
+    animation: float 15s infinite alternate ease-in-out;
+    opacity: 0.15;
+}
 
 @keyframes float {
-    0% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-40px) scale(1.05); }
-    100% { transform: translateY(0) scale(1); }
+    0% {
+        transform: translateY(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(-40px) scale(1.05);
+    }
+
+    100% {
+        transform: translateY(0) scale(1);
+    }
 }

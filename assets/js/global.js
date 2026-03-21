@@ -230,6 +230,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 gsap.set(ring, { x: ringX, y: ringY });
             });
 
+
+                document.addEventListener('mouseover', (e) => {
+                    if (e.target.closest('a, button, .faq-question, .magnetic-btn, .cta-icon-btn, .mobile-item')) {
+                        ring.classList.add('hovered');
+                    }
+
+
+
             // Universal hover effect
             document.addEventListener('mouseover', (e) => {
                 if (e.target.closest('a, button, .faq-question, .magnetic-btn, .cta-icon-btn, .mobile-item')) {

@@ -223,6 +223,8 @@
 @media (max-width: 1024px) {
     
     #home-sliding-content { 
+        margin: 0;
+        padding-bottom: ;
         width: calc(100% + 2rem); 
         margin-left: -1rem; 
         padding: 2rem 1rem; 
@@ -250,6 +252,9 @@
 
     .hero-content { 
         max-width: 100%; 
+        bottom: 0%;
+        max-height: 200px;
+        inline-size: 100%;
         margin-top: 2rem;
     }
     .hero-content h1 { font-size: 2.5rem; } 
@@ -266,6 +271,7 @@
         margin-top: 2rem;
         padding: 1.5rem;
         top: auto; right: auto; bottom: auto; left: auto;
+        box-shadow: none;
     }
     
     .promo-banner { 
@@ -275,6 +281,10 @@
         flex-direction: column; 
         text-align: center;
         gap: 1.5rem;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: large;
+        text-align: center;
+        text-decoration: dotted underline;
     }
     
     .promo-content { flex-direction: column; gap: 1rem; }
